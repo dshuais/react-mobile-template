@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 15:35:10
+ * @LastEditTime: 2024-04-12 15:52:59
  * @description: Home
  */
 import { useMemo, useState } from 'react'
@@ -19,6 +19,7 @@ import ViteLogo from '@/assets/react.svg?react'
 import RobotIcon from '@/assets/icons/robot.svg?react'
 import Test from '@/components/Test'
 import { Button, Toast } from 'antd-mobile'
+import PopTest from '@/components/Popups/PopTest'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -57,6 +58,9 @@ function App() {
         <Button color='primary' fill='solid' onClick={handleClick}>
           Solid
         </Button>
+
+        <PopTest />
+
         <div className={styles.div}></div>
         <div className={`break-all ${styles.token}`}>token: {token}</div>
         <button onClick={() => appActions.setToken(token + '123')}>
