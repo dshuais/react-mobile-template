@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 17:30:19
+ * @LastEditTime: 2024-04-12 18:13:56
  * @description: Home
  */
 import { useMemo, useRef, useState } from 'react'
@@ -12,15 +12,15 @@ import viteLogo from '/vite.svg'
 import styles from './index.module.css'
 import { useSnapshot } from 'valtio'
 import { appStore, appActions, setStore, setActions } from '@/store'
-import { DialogContext } from '@/common'
+import { DialogContext, PopupNames } from '@/common'
 import LoadingIcon from '@/assets/icons/loading.svg?react'
 import loadingIcon from '@/assets/icons/loading.svg'
 import ViteLogo from '@/assets/react.svg?react'
 import RobotIcon from '@/assets/icons/robot.svg?react'
 import Test from '@/components/Test'
-import { Button, Toast } from 'antd-mobile'
+import { Button } from 'antd-mobile'
 import PopTest, { PopTestRef } from '@/components/Popups/PopTest'
-import { popupActions } from '@/store/modules/popups'
+import { usePopup } from '@/hooks'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -43,6 +43,8 @@ function App() {
 
   const ref = useRef<PopTestRef>(null)
 
+  const { popShow } = usePopup()
+
   function handleClick() {
     // Toast.show({
     //   icon: 'loading',
@@ -53,8 +55,9 @@ function App() {
     //     console.log('after')
     //   },
     // })
-    // popupActions.showPopup('PopTest')
-    ref.current?.setShow(true)
+    setCount(count + 1)
+    // ref.current?.setShow(true)
+    popShow(PopupNames.popTest)
   }
 
   return (

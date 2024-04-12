@@ -2,30 +2,30 @@
  * @Author: dushuai
  * @Date: 2024-04-12 16:57:59
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 17:22:48
+ * @LastEditTime: 2024-04-12 18:11:54
  * @description: popups store
  */
+import { PopupNames } from "@/common";
 import { proxy } from "valtio";
 import { devtools } from "valtio/utils";
 
 type PopupStore = {
-  list: Map<string, Item>
+  list: Map<PopupNames, Item>
 }
 
 type Item = {
+  show: boolean
   setShow: (show: boolean) => void
 }
 
 export const popupStore: PopupStore = proxy({
-  list: new Map<string, Item>()
+  list: new Map<PopupNames, Item>()
 })
 
 type Actions = {
-  setPopup: (key: string, item: Item) => void
-  removePopup: (key: string) => void
+  setPopup: (key: PopupNames, item: Item) => void
+  removePopup: (key: PopupNames) => void
   clear: () => void
-
-  showPopup: (key: string) => void
 }
 
 export const popupActions: Actions = {
@@ -50,15 +50,7 @@ export const popupActions: Actions = {
 
   clear() {
     popupStore.list.clear()
-    popupStore.list = new Map<string, Item>()
-  },
-
-  showPopup(key) {
-    if (popupStore.list.has(key)) {
-      popupStore.list.get(key)!.setShow(true)
-    } else {
-      console.warn('弹窗未挂载:>> ', key)
-    }
+    popupStore.list = new Map<PopupNames, Item>()
   }
 
 }

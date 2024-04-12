@@ -2,13 +2,14 @@
  * @Author: dushuai
  * @Date: 2024-04-12 15:44:41
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 17:29:55
+ * @LastEditTime: 2024-04-12 18:12:39
  * @description: 测试弹窗组件
  */
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { CenterPopup } from 'antd-mobile'
 import styles from './PopTest.module.less'
-import { popupActions } from '@/store/modules/popups'
+import { popupActions } from '@/store'
+import { PopupNames } from '@/common'
 
 export type PopTestRef = {
   show: boolean,
@@ -29,7 +30,7 @@ export default forwardRef(function PopTest(_, ref) {
 
   useEffect(() => {
     console.log('弹窗挂载');
-    popupActions.setPopup('PopTest', { setShow })
+    popupActions.setPopup(PopupNames.popTest, { show, setShow })
 
     return () => {
       console.log('弹窗卸载');
