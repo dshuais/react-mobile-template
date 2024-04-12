@@ -2,10 +2,10 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 15:52:59
+ * @LastEditTime: 2024-04-12 17:30:19
  * @description: Home
  */
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -19,7 +19,8 @@ import ViteLogo from '@/assets/react.svg?react'
 import RobotIcon from '@/assets/icons/robot.svg?react'
 import Test from '@/components/Test'
 import { Button, Toast } from 'antd-mobile'
-import PopTest from '@/components/Popups/PopTest'
+import PopTest, { PopTestRef } from '@/components/Popups/PopTest'
+import { popupActions } from '@/store/modules/popups'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -40,16 +41,20 @@ function App() {
 
   console.log('父组件');
 
+  const ref = useRef<PopTestRef>(null)
+
   function handleClick() {
-    Toast.show({
-      icon: 'loading',
-      content: 'Loading...',
-      maskClickable: false,
-      duration: 3000,
-      afterClose: () => {
-        console.log('after')
-      },
-    })
+    // Toast.show({
+    //   icon: 'loading',
+    //   content: 'Loading...',
+    //   maskClickable: false,
+    //   duration: 3000,
+    //   afterClose: () => {
+    //     console.log('after')
+    //   },
+    // })
+    // popupActions.showPopup('PopTest')
+    ref.current?.setShow(true)
   }
 
   return (
@@ -59,7 +64,7 @@ function App() {
           Solid
         </Button>
 
-        <PopTest />
+        <PopTest ref={ref} />
 
         <div className={styles.div}></div>
         <div className={`break-all ${styles.token}`}>token: {token}</div>

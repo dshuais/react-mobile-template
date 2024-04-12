@@ -2,19 +2,34 @@
  * @Author: dushuai
  * @Date: 2024-04-12 15:44:41
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 16:16:15
+ * @LastEditTime: 2024-04-12 17:29:55
  * @description: 测试弹窗组件
  */
-import { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { CenterPopup } from 'antd-mobile'
 import styles from './PopTest.module.less'
+import { popupActions } from '@/store/modules/popups'
 
-export default function PopTest() {
+export type PopTestRef = {
+  show: boolean,
+  setShow: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-  const [show, setShow] = useState(true)
+export default forwardRef(function PopTest(_, ref) {
+
+  const [show, setShow] = useState(false)
+
+  useImperativeHandle(ref, (): PopTestRef => {
+    return {
+      show,
+      setShow
+    }
+  }, [])
+
 
   useEffect(() => {
     console.log('弹窗挂载');
+    popupActions.setPopup('PopTest', { setShow })
 
     return () => {
       console.log('弹窗卸载');
@@ -29,4 +44,4 @@ export default function PopTest() {
       <div className={styles.close} onClick={() => setShow(false)}>close</div>
     </CenterPopup>
   )
-}
+})
