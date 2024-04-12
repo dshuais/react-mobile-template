@@ -38,8 +38,6 @@ pnpm sit
 pnpm prod
 ```
 
-`
-
 ## 技术栈
 
 主要采用 Vite + React + TypeScript + SWC + Tailwind css + Valtio + Ant Design 等常用技术栈和常用库构建

@@ -3,13 +3,12 @@
 * @Author: dushuai
 * @Date: 2024-03-29 16:13:37
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-08 10:35:23
+ * @LastEditTime: 2024-04-12 11:15:04
 * @description: login
 */
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { useSnapshot } from 'valtio'
 import { setStore, setActions, appActions } from '@/store'
-import { message } from 'antd'
 
 function Login() {
   const [params, setParams] = useSearchParams()
@@ -25,7 +24,6 @@ function Login() {
   const { theme } = useSnapshot(setStore)
 
   function handleLogin() {
-    message.success('登陆成功')
     appActions.setToken('test-tokentokentokentokentokentokentokentokentokentokentokentokentoken')
     navigate('/', { replace: true })
   }

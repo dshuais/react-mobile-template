@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-11 17:04:58
+ * @LastEditTime: 2024-04-12 11:14:58
  * @description: Home
  */
 import { useMemo, useState } from 'react'
@@ -12,7 +12,6 @@ import viteLogo from '/vite.svg'
 import styles from './index.module.css'
 import { useSnapshot } from 'valtio'
 import { appStore, appActions, setStore, setActions } from '@/store'
-import { Button, message } from 'antd'
 import { DialogContext } from '@/common'
 import LoadingIcon from '@/assets/icons/loading.svg?react'
 import loadingIcon from '@/assets/icons/loading.svg'
@@ -37,27 +36,18 @@ function App() {
   const { theme } = useSnapshot(setStore)
   // const actions = useSnapshot(appActions)
 
-  const [messageApi, contextHolder] = message.useMessage();
-
   console.log('父组件');
 
   return (
     <DialogContext.Provider value={{}}>
       <div className={styles.root}>
-        <div>contextHolder: {contextHolder}</div>
-        <Button type="primary" onClick={() => {
-          messageApi.success('success'), console.log(contextHolder)
-          // message.open({ content: 'success' })
-        }}>
-          message
-        </Button>
         <div>token: {token}</div>
-        <Button type="primary" onClick={() => appActions.setToken(token + '123')}>
+        <button onClick={() => appActions.setToken(token + '123')}>
           修改token
-        </Button>
-        <Button type="primary" danger onClick={() => appActions.reset()}>
+        </button>
+        <button onClick={() => appActions.reset()}>
           重置
-        </Button>
+        </button>
         <div>theme: {theme}</div>
         <button onClick={() => setActions.setTheme('dark')}>
           theme

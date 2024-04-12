@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2023-03-14 17:53:45
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-09 21:23:00
+ * @LastEditTime: 2024-04-12 11:14:08
  * @description: axios
  */
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
@@ -10,7 +10,6 @@ import qs from 'qs'
 import { cancelRequest } from './requestCancel'
 import ErrorCodeHandle from './requestCode'
 import { appStore } from '@/store'
-import { message } from 'antd'
 
 /** 不需要处理异常白名单 */
 const whiteList: string[] = ['/qiniu/upload/uptoken']
@@ -75,10 +74,10 @@ service.interceptors.response.use(
     if (err.code === 'ERR_CANCELED') {
       console.log('请求取消url:>> ', err.config?.url)
     } else if (err.code === 'ECONNABORTED' && err.message.includes('timeout')) {
-      message.error('请求超时,请检查服务器状态')
+      // message.error('请求超时,请检查服务器状态')
       return Promise.reject(err)
     } else {
-      message.error(err.message)
+      // message.error(err.message)
       return Promise.reject(err)
     }
   }
