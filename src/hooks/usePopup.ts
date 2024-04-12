@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-12 17:36:51
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 18:13:36
+ * @LastEditTime: 2024-04-12 18:42:20
  * @description: 弹窗hooks
  */
 import { PopupNames } from '@/common'
@@ -77,6 +77,8 @@ export function usePopup(): PopupType {
    */
   function popCloseAll(): Promise<boolean> {
     return new Promise(resolve => {
+      if (openPopups.size === 0) return resolve(true)
+
       openPopups.forEach(close => close())
 
       resetOpenPopups()

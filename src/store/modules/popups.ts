@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-12 16:57:59
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 18:11:54
+ * @LastEditTime: 2024-04-12 18:45:13
  * @description: popups store
  */
 import { PopupNames } from "@/common";
@@ -51,6 +51,7 @@ export const popupActions: Actions = {
   clear() {
     popupStore.list.clear()
     popupStore.list = new Map<PopupNames, Item>()
+    console.log('clear', popupStore.list);
   }
 
 }
