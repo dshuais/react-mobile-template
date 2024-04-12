@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 14:12:55
+ * @LastEditTime: 2024-04-12 15:35:10
  * @description: Home
  */
 import { useMemo, useState } from 'react'
@@ -18,6 +18,7 @@ import loadingIcon from '@/assets/icons/loading.svg'
 import ViteLogo from '@/assets/react.svg?react'
 import RobotIcon from '@/assets/icons/robot.svg?react'
 import Test from '@/components/Test'
+import { Button, Toast } from 'antd-mobile'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -38,9 +39,24 @@ function App() {
 
   console.log('父组件');
 
+  function handleClick() {
+    Toast.show({
+      icon: 'loading',
+      content: 'Loading...',
+      maskClickable: false,
+      duration: 3000,
+      afterClose: () => {
+        console.log('after')
+      },
+    })
+  }
+
   return (
     <DialogContext.Provider value={{}}>
       <div className={styles.root}>
+        <Button color='primary' fill='solid' onClick={handleClick}>
+          Solid
+        </Button>
         <div className={styles.div}></div>
         <div className={`break-all ${styles.token}`}>token: {token}</div>
         <button onClick={() => appActions.setToken(token + '123')}>

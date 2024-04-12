@@ -31,10 +31,10 @@ body {
 /**
 * 设置默认滚动条样式
 */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
+} */
 /* ::-webkit-scrollbar-track { */
 /* background-color: #f5f5f5; */
 /* } */
@@ -42,10 +42,10 @@ body {
   background-color: #f5f5f5;
   border-radius: 6px;
 } */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background-color: #cccccc;
   border-radius: 12px;
-}
+} */
 /* ::-webkit-scrollbar-corner {
   background-color: #f5f5f5;
 } */
