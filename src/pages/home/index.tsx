@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 12:13:27
+ * @LastEditTime: 2024-04-12 14:12:55
  * @description: Home
  */
 import { useMemo, useState } from 'react'
@@ -82,7 +82,7 @@ function App() {
           {/* {
             count % 2 === 0 ? <Test /> : <div>没有子组件</div>
           } */}
-          <Test />
+          <Test count={count} />
 
           <p>
             Edit <code>src/App.tsx</code> and save to test HMR
