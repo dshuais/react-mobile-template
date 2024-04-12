@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 11:14:58
+ * @LastEditTime: 2024-04-12 12:13:27
  * @description: Home
  */
 import { useMemo, useState } from 'react'
@@ -41,7 +41,8 @@ function App() {
   return (
     <DialogContext.Provider value={{}}>
       <div className={styles.root}>
-        <div>token: {token}</div>
+        <div className={styles.div}></div>
+        <div className={`break-all ${styles.token}`}>token: {token}</div>
         <button onClick={() => appActions.setToken(token + '123')}>
           修改token
         </button>
