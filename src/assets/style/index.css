@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+* 设置默认滚动条样式
+*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+/* ::-webkit-scrollbar-track { */
+/* background-color: #f5f5f5; */
+/* } */
+/* ::-webkit-scrollbar-track-piece {
+  background-color: #f5f5f5;
+  border-radius: 6px;
+} */
+::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 12px;
+}
+/* ::-webkit-scrollbar-corner {
+  background-color: #f5f5f5;
+} */
+/* ::-webkit-resizer {
+  background-repeat: no-repeat;
+  background-position: bottom right;
+} */
+
+.scrollbar-custom {
+  overflow-y: scroll;
+}
+.scrollbar-custom::-webkit-scrollbar {
+  width: 3px;
+  background-color: transparent;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 12px;
+}
+
+.scrollbar-none {
+  overflow-y: scroll;
+}
+.scrollbar-none::-webkit-scrollbar {
+  width: 0px;
+  opacity: 0;
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent !important;
+}
