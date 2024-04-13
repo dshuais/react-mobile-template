@@ -36,8 +36,6 @@ export const popupActions: Actions = {
       this.removePopup(key)
     }
     popupStore.list.set(key, item)
-    console.log(key, ' 挂载成功');
-
   },
 
   removePopup(key) {
@@ -51,7 +49,6 @@ export const popupActions: Actions = {
   clear() {
     popupStore.list.clear()
     popupStore.list = new Map<PopupNames, Item>()
-    console.log('clear', popupStore.list);
   }
 
 }

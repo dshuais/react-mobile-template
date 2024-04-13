@@ -2,12 +2,20 @@
  * @Author: dushuai
  * @Date: 2024-03-29 18:14:56
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 11:16:23
+ * @LastEditTime: 2024-04-13 17:29:30
  * @description: loading 组件
  */
-export default function Loading() {
+import styles from "./index.module.css"
 
+export default function Loading() {
   return (
-    <div className="text-center my-20">加载中...</div>
+    <div className={styles.loading}>
+      <div className={styles.loader}>
+        <div className={styles.circle}></div>
+        <div className={styles.circle}></div>
+        <div className={styles.circle}></div>
+        <div className={styles.circle}></div>
+      </div>
+    </div>
   )
 }
