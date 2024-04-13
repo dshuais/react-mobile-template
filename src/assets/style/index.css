@@ -79,6 +79,7 @@ body {
   color: transparent !important;
 }
 
+/* 重写antd-m 弹窗样式 */
 .adm-center-popup-wrap {
   width: 100% !important;
   max-width: 100% !important;
