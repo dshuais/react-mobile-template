@@ -155,11 +155,12 @@ export default defineConfig(({ mode }) => {
           }),
 
           PostCssPxToRem({
-            rootValue: 75, // 基准值 设计稿的宽度/10  // 75=750
+            rootValue: 100, // 基准值 设计稿的宽度/10  // 75=750
             // rootValue({ file }) {
             //   // 项目中使用的 antd官方社区的 antd-mobile 组件库。这里做了区分，如果样式文件命中有 antd-mobile 则以 375 样稿转化。这里不做区分，那么 antd-mobile 各组件样式会变形。
             //   return file.indexOf('antd-mobile') !== -1 ? 37.5 : 75
             // },
+            unitPrecision: 5, //保留rem小数点多少位
             propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
             selectorBlackList: ['norem'], // 忽略转换正则匹配的属性  // norem-开头的class，不进行rem转换
             // minPixelValue: 0, // 设置要替换的最小像素值(3px会被转rem)。 默认 0

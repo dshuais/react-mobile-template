@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 html {
+  font-size: calc((100vw / 750) * 100);
   width: 100%;
   height: 100%;
   color: #000;
   overflow: hidden;
   background: transparent;
-  font-family: '微软雅黑', 'Microsoft YaHei', Tahoma, Arial, sans-serif;
+  font-family: "微软雅黑", "Microsoft YaHei", Tahoma, Arial, sans-serif;
 }
 
 body {
