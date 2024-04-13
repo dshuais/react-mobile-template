@@ -79,11 +79,17 @@ body {
   color: transparent !important;
 }
 
+.adm-center-popup-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 .adm-center-popup-wrap .adm-center-popup-body {
-  background: transparent;
   min-width: 100%;
+  height: 100vh;
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* height: 100vh; // 可以设置弹窗居中的话 注释height */
+  justify-content: center;
 }
