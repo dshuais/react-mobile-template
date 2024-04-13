@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-07 11:54:24
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-11 11:13:38
+ * @LastEditTime: 2024-04-13 23:39:17
  * @description: 权限
  */
 import { devtools } from "valtio/utils"
@@ -11,6 +11,7 @@ import { proxy } from "valtio"
 import { deepClone } from "@/utils"
 import { lazy } from "react"
 import router from '@/router'
+import { getPath, modules } from "@/router/routes"
 
 /**
  * 路由表内的路由
@@ -93,14 +94,14 @@ function filterAsyncRouter(routes: Route[]) {
 /**
  * 所有pages下页面文件
  */
-const modules = import.meta.glob('@/pages/*/index.tsx')
+// const modules = import.meta.glob('@/pages/*/index.tsx')
 /**
  * 所有pages下页面文件 去除了目录前缀
  */
-const components = Object.keys(modules).reduce<Record<string, any>>((prev, cur) => {
-  prev[cur.replace('/src/pages/', '')] = modules[cur]
-  return prev
-}, {})
+// const components = Object.keys(modules).reduce<Record<string, any>>((prev, cur) => {
+//   prev[cur.replace('/src/pages/', '')] = modules[cur]
+//   return prev
+// }, {})
 
 /**
  * 获取动态页面
@@ -108,5 +109,6 @@ const components = Object.keys(modules).reduce<Record<string, any>>((prev, cur) 
  * @returns 
  */
 function createComponent(name: string) {
-  return lazy(components[`${name}/index.tsx`])
+  // return lazy(components[`${name}/index.tsx`])
+  return lazy(modules[getPath(name)])
 }

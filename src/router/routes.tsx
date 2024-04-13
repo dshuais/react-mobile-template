@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:17:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-11 11:11:15
+ * @LastEditTime: 2024-04-13 23:38:44
  * @description: 路由表
  */
 import { ComponentType, lazy } from 'react'
@@ -16,8 +16,10 @@ type Module = {
   [keys in string]: () => Promise<{ default: ComponentType<any>; }>
 }
 
-// 动态路由获取所有页面
-const modules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module
+/**
+ * 所有pages下页面文件
+ */
+export const modules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module
 
 const routes: RouteObject[] = [
   {
@@ -46,14 +48,23 @@ const routes: RouteObject[] = [
     //   return { Component: Login }
     // }
     // Component: lazy(() => import('@/pages/login'))
-    Component: lazy(modules['/src/pages/login/index.tsx'])
+    Component: lazy(modules[getPath('login')])
   },
   {
     path: '*',
-    Component: lazy(modules['/src/pages/error/index.tsx'])
+    Component: lazy(modules[getPath('error')])
     // element: <ErrorElement />,
     // errorElement: <ErrorElement />
   }
 ]
 
 export default routes
+
+/**
+ * 获取页面路径
+ * @param name 
+ * @returns 
+ */
+export function getPath(name: string) {
+  return `/src/pages/${name}/index.tsx`
+}
