@@ -18,7 +18,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "valtio": "^1.13.2"
+    "valtio": "^1.13.2",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

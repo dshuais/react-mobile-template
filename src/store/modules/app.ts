@@ -1,63 +1,81 @@
 /*
  * @Author: dushuai
- * @Date: 2024-04-01 15:35:04
+ * @Date: 2024-04-17 14:49:31
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-07 17:37:58
- * @description: App基础store
+ * @LastEditTime: 2024-04-28 15:26:21
+ * @description: app store
  */
-import { proxy, subscribe } from 'valtio'
-import { devtools } from 'valtio/utils'
+import { StoreKey } from "@/common"
+import { create } from "zustand"
+import { createJSONStorage, persist, devtools } from 'zustand/middleware'
 
-type AppStore = {
+type Store = {
   token: string
+  // ... other state properties
 }
 
-/**
- * default app store
- * @returns AppStore
- */
-const getAppStore = (): AppStore => ({
+type Actions = {
+  SET_TOKEN: (token: string) => void
+  REMOVE_TOKEN: () => void
+  RESET: () => void
+  SET_STATE: (data: { key: keyof Store, val: Store[keyof Store] }) => void
+  // ... other action creators
+}
+
+// define the initial state
+const initialState = (): Store => ({
   token: ''
 })
 
 /**
- * app store
+ * 当前store版本
+ * 更改后需要手动修改并添加migrate逻辑
  */
-export const appStore = proxy(
-  JSON.parse(sessionStorage.getItem('app-store') as string) || getAppStore()
+const APP_STORE_VERSION: number = 0.1
+
+export const useAppStore = create<Store & Actions>()(
+  devtools(
+    persist(
+      (set) => ({
+        ...initialState(),
+
+        SET_STATE(data: { key: keyof Store, val: Store[keyof Store] }) {
+          set({ [data.key]: data.val })
+        },
+
+        SET_TOKEN(token) {
+          // set({ token })
+          set(_state => ({ token }))
+        },
+
+        REMOVE_TOKEN() {
+          set({ token: '' })
+          // set(state => ({ token: '' }))
+        },
+
+        RESET() {
+          set(initialState())
+        }
+
+      }),
+      {
+        name: StoreKey.APP, // unique name
+        storage: createJSONStorage(() => sessionStorage),
+        version: APP_STORE_VERSION, // a migration will be triggered if the version in the storage mismatches this one
+
+        // migration logic
+        migrate: (persistedState, version) => {
+
+          const state = initialState()
+
+          if (version != APP_STORE_VERSION) {
+            Object.assign(state, persistedState)
+          }
+
+          return state
+        }
+      }
+    ),
+    { name: StoreKey.APP, enabled: true }
+  )
 )
-
-/**
- * actions
- */
-export const appActions = {
-  setToken(token: string) {
-    appStore.token = token
-  },
-  resetToken() {
-    appStore.token = ''
-  },
-
-  /**
-   * 重置整个store
-   */
-  reset() {
-    const app = getAppStore()
-    Object.keys(app).forEach((key) => {
-      appStore[key] = app[key as keyof AppStore]
-    })
-  }
-}
-
-/**
- * 订阅AppStore变化
- * 持久化处理
- */
-subscribe(appStore, () => {
-  sessionStorage.setItem('app-store', JSON.stringify(appStore))
-})
-
-/**
- * 配置使用devtools 插件
- */
-devtools(appStore, { name: 'app store', enabled: true })

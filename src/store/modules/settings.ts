@@ -1,35 +1,57 @@
 /*
  * @Author: dushuai
- * @Date: 2024-04-01 16:31:58
+ * @Date: 2024-04-18 15:09:58
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-01 16:44:31
- * @description: 配置 store
+ * @LastEditTime: 2024-04-18 17:20:05
+ * @description: settings store
  */
-import { proxy, subscribe } from 'valtio'
-import { devtools } from 'valtio/utils'
+import { StoreKey } from '@/common'
+import { MakeState, createCustomStore } from '../store'
+import { createJSONStorage } from 'zustand/middleware'
 
-type Theme = 'light' | 'dark'
-
-type Settings = {
-  theme: Theme
+type Store = {
+  theme: 'dark' | 'light'
 }
 
-const getSettings = (): Settings => ({
-  theme: 'light'
+const initialState = (): Store => ({
+  theme: 'light',
 })
 
-export const setStore = proxy(
-  JSON.parse(localStorage.getItem('settings-store') as string) || getSettings()
-)
+/**
+ * 当前store版本
+ * 更改后需要手动修改并添加migrate逻辑
+ */
+const APP_STORE_VERSION: number = 0.1
 
-export const setActions = {
-  setTheme(theme: Theme) {
-    setStore.theme = theme
+export const useSettings = createCustomStore(
+  StoreKey.SETTINGS,
+
+  initialState(),
+
+  (set) => ({
+
+    SET_THEME(theme: Store['theme']) {
+      set({ theme })
+    },
+
+  }),
+
+  {
+    name: StoreKey.SETTINGS, // unique name
+    storage: createJSONStorage(() => sessionStorage),
+    version: APP_STORE_VERSION, // a migration will be triggered if the version in the storage mismatches this one
+
+    // migration logic
+    migrate: (persistedState, version) => {
+      type State = Store & MakeState
+
+      const state = initialState()
+
+      if (version != APP_STORE_VERSION) {
+        Object.assign(state, persistedState,)
+      }
+
+      return state as State
+    }
   }
-}
-
-subscribe(setStore, () => {
-  localStorage.setItem('settings-store', JSON.stringify(setStore))
-})
-
-devtools(setStore, { name: 'settings store', enabled: true })
+)
