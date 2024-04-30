@@ -2,18 +2,15 @@
  * @Author: dushuai
  * @Date: 2024-04-12 17:36:51
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 14:41:56
+ * @LastEditTime: 2024-04-30 16:00:17
  * @description: 弹窗hooks
  */
 import { PopupNames } from '@/common'
-// import { popupStore } from '@/store'
-import { useSnapshot } from 'valtio'
+import { usePopupStore } from '@/store'
 
 export function usePopup(): PopupType {
 
-  // const { list } = useSnapshot(popupStore)
-
-  const list = new Map()
+  const list = usePopupStore(state => state.list)
 
   /**
    * 打开的弹窗

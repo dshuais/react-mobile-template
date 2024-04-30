@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-12 15:44:41
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 15:00:25
+ * @LastEditTime: 2024-04-30 15:51:38
  * @description: 测试弹窗组件
  */
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
@@ -16,7 +16,7 @@ export type PopTestRef = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default forwardRef(function PopTest(_, ref) {
+export default forwardRef(function PopTestTwo(_, ref) {
 
   const [show, setShow] = useState(false)
 
@@ -32,7 +32,7 @@ export default forwardRef(function PopTest(_, ref) {
 
   useEffect(() => {
     console.log('弹窗挂载');
-    SET_POPUP(PopupNames.popTest, { show, setShow })
+    SET_POPUP(PopupNames.PopTestTwo, { show, setShow })
 
     return () => {
       console.log('弹窗卸载');

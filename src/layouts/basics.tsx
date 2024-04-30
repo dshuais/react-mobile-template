@@ -2,12 +2,12 @@
  * @Author: dushuai
  * @Date: 2024-04-07 10:25:43
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 14:43:13
+ * @LastEditTime: 2024-04-30 15:58:31
  * @description: BasicsLayout
  */
 
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppStore } from "@/store";
+import { useAppStore, usePopupStore } from "@/store";
 import { useEffect } from "react";
 import Loading from "@/components/Loading";
 import { usePopup } from "@/hooks";
@@ -18,6 +18,7 @@ export default function BasicsLayout() {
   const navigate = useNavigate();
 
   const token = useAppStore(state => state.token)
+  const CLEAR = usePopupStore(state => state.CLEAR)
 
   const { popCloseAll } = usePopup()
 
@@ -30,7 +31,7 @@ export default function BasicsLayout() {
     return () => {
       console.log('路由发生了变化:>>              ', pathname);
       popCloseAll()
-      // popupActions.clear()
+      CLEAR()
     }
 
   }, [pathname, token])

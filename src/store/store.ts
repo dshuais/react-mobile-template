@@ -2,11 +2,11 @@
  * @Author: dushuai
  * @Date: 2024-04-18 12:28:06
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-28 16:24:05
+ * @LastEditTime: 2024-04-30 15:48:30
  * @description: 创建自定义store
  */
 import { StoreKey } from "@/common";
-import { create } from "zustand";
+import { StoreApi, UseBoundStore, create } from "zustand";
 import { PersistOptions, combine, devtools, persist } from "zustand/middleware";
 
 type SetStoreState<T> = (
@@ -26,7 +26,9 @@ export type MakeUpdater<T> = {
   RESET: () => void
 }
 
-export type Methods<T, M> = (set: SetStoreState<T>, get: () => M & T & MakeUpdater<T>) => M
+type Store<S extends StoreApi<unknown>> = UseBoundStore<S>
+
+export type Methods<T, M> = (set: SetStoreState<T>, get: () => M & T & MakeUpdater<T>, store: Store<any>) => M
 
 /**
  * 创建store
@@ -60,8 +62,8 @@ export function createCustomStore<T extends Object, M>(
         combine(
           newStore,
 
-          (set, get) => ({
-            ...methods(set, get as Get),
+          (set, get, store) => ({
+            ...methods(set, get as Get, store),
 
             /**
              * 一个通用set的方法 可用于偷懒
@@ -91,4 +93,22 @@ export function createCustomStore<T extends Object, M>(
       { name, enabled: true }
     )
   )
+}
+
+/**
+ * 序列化map  因为zustand内对map的序列化有问题，所以手动转换
+ * @param data get().xxx拿到的数据
+ * @returns 
+ */
+export function serializerMap<T extends Object>(data: T): T {
+  return new Map(Object.entries(data)) as unknown as T
+}
+
+/**
+ * 反序列化map
+ * @param data serializerMap的map
+ * @returns 
+ */
+export function deserializerMap(data: Map<string, any>) {
+  return Object.fromEntries(data)
 }

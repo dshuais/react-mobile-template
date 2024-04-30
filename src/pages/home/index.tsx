@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 14:45:35
+ * @LastEditTime: 2024-04-30 15:54:02
  * @description: Home
  */
 import { useMemo, useRef, useState } from 'react'
@@ -19,10 +19,12 @@ import RobotIcon from '@/assets/icons/robot.svg?react'
 import Test from '@/components/Test'
 import { Button } from 'antd-mobile'
 import PopTest, { PopTestRef } from '@/components/Popups/PopTest'
-// import { usePopup } from '@/hooks'
+import PopTestTwo from '@/components/Popups/PopTestTwo'
+import { usePopup } from '@/hooks'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [two, setTwo] = useState(false)
 
   const countMemo = useMemo(() => {
     return count * 5 - count
@@ -43,7 +45,7 @@ function App() {
 
   const ref = useRef<PopTestRef>(null)
 
-  // const { popShow } = usePopup()
+  const { popShow } = usePopup()
 
   function handleClick() {
     // Toast.show({
@@ -57,7 +59,8 @@ function App() {
     // })
     setCount(count + 1)
     // ref.current?.setShow(true)
-    // popShow(PopupNames.popTest)
+    popShow(PopupNames.popTest)
+    setTwo(true)
   }
 
   return (
@@ -67,7 +70,11 @@ function App() {
           Solid
         </Button>
 
-        {/* <PopTest ref={ref} /> */}
+        <PopTest ref={ref} />
+
+        {
+          two ? <PopTestTwo /> : null
+        }
 
         <div className={styles.div}></div>
         <div className={`break-all ${styles.token}`}>token: {token}</div>
