@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 18:13:56
+ * @LastEditTime: 2024-04-30 14:45:35
  * @description: Home
  */
 import { useMemo, useRef, useState } from 'react'
@@ -10,8 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '/vite.svg'
 import styles from './index.module.css'
-import { useSnapshot } from 'valtio'
-import { appStore, appActions, setStore, setActions } from '@/store'
+import { useAppStore, useSettings } from '@/store'
 import { DialogContext, PopupNames } from '@/common'
 import LoadingIcon from '@/assets/icons/loading.svg?react'
 import loadingIcon from '@/assets/icons/loading.svg'
@@ -20,7 +19,7 @@ import RobotIcon from '@/assets/icons/robot.svg?react'
 import Test from '@/components/Test'
 import { Button } from 'antd-mobile'
 import PopTest, { PopTestRef } from '@/components/Popups/PopTest'
-import { usePopup } from '@/hooks'
+// import { usePopup } from '@/hooks'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -35,15 +34,16 @@ function App() {
     navigate('/login', { state: { b: 666 } })
   }
 
-  const { token } = useSnapshot(appStore)
-  const { theme } = useSnapshot(setStore)
-  // const actions = useSnapshot(appActions)
+  const token = useAppStore(state => state.token)
+  const RESET_APP = useAppStore(state => state.RESET)
+  const SET_TOKEN = useAppStore(state => state.SET_TOKEN)
+  const { theme, SET_THEME } = useSettings()
 
   console.log('父组件');
 
   const ref = useRef<PopTestRef>(null)
 
-  const { popShow } = usePopup()
+  // const { popShow } = usePopup()
 
   function handleClick() {
     // Toast.show({
@@ -57,7 +57,7 @@ function App() {
     // })
     setCount(count + 1)
     // ref.current?.setShow(true)
-    popShow(PopupNames.popTest)
+    // popShow(PopupNames.popTest)
   }
 
   return (
@@ -67,18 +67,18 @@ function App() {
           Solid
         </Button>
 
-        <PopTest ref={ref} />
+        {/* <PopTest ref={ref} /> */}
 
         <div className={styles.div}></div>
         <div className={`break-all ${styles.token}`}>token: {token}</div>
-        <button onClick={() => appActions.setToken(token + '123')}>
+        <button onClick={() => SET_TOKEN(token + '123')}>
           修改token
         </button>
-        <button onClick={() => appActions.reset()}>
+        <button onClick={RESET_APP}>
           重置
         </button>
         <div>theme: {theme}</div>
-        <button onClick={() => setActions.setTheme('dark')}>
+        <button onClick={() => SET_THEME('dark')}>
           theme
         </button>
         <LoadingIcon className='fill-[#1d93ab] w-16 h-16' />

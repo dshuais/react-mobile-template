@@ -2,14 +2,14 @@
  * @Author: dushuai
  * @Date: 2023-03-14 17:53:45
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-12 11:14:08
+ * @LastEditTime: 2024-04-30 14:42:43
  * @description: axios
  */
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import qs from 'qs'
 import { cancelRequest } from './requestCancel'
 import ErrorCodeHandle from './requestCode'
-import { appStore } from '@/store'
+import { useAppStore } from '@/store'
 
 /** 不需要处理异常白名单 */
 const whiteList: string[] = ['/qiniu/upload/uptoken']
@@ -24,7 +24,7 @@ const service = axios.create({
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig<any>) => {
     // 添加token
-    const { token } = appStore
+    const token = useAppStore.getState().token
 
     if (token) {
       config.headers['token'] = token

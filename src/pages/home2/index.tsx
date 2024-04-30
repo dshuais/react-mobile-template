@@ -3,14 +3,13 @@
 * @Author: dushuai
 * @Date: 2024-03-29 16:13:37
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-11 17:03:27
+ * @LastEditTime: 2024-04-30 14:39:08
 * @description: login
 */
 import { useNavigate, useSearchParams } from "react-router-dom"
-import { useSnapshot } from 'valtio'
-import { setStore, setActions } from '@/store'
+import { useSettings } from '@/store'
 
-function Login() {
+function Home2() {
   const [params, setParams] = useSearchParams()
 
   const navtivate = useNavigate()
@@ -21,7 +20,7 @@ function Login() {
     })
   }
 
-  const { theme } = useSnapshot(setStore)
+  const { theme, SET_THEME } = useSettings()
 
   return (
     <>
@@ -29,7 +28,7 @@ function Login() {
       login query a =  {params.get('a')}
 
       <div>theme: {theme}</div>
-      <button onClick={() => setActions.setTheme('light')}>
+      <button onClick={() => SET_THEME('light')}>
         theme
       </button>
 
@@ -44,4 +43,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Home2
