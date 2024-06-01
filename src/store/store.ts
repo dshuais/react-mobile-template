@@ -101,8 +101,8 @@ export function createCustomStore<T extends object, M>(
  * @param data get().xxx拿到的数据
  * @returns 
  */
-export function serializerMap<T extends object>(data: T): T {
-  return new Map(Object.entries(data)) as unknown as T
+export function serializerMap<T>(data: object): T {
+  return new Map(Object.entries(data)) as T
 }
 
 /**
@@ -110,6 +110,6 @@ export function serializerMap<T extends object>(data: T): T {
  * @param data serializerMap的map
  * @returns 
  */
-export function deserializerMap(data: Map<string, unknown>) {
-  return Object.fromEntries(data)
+export function deserializerMap<T>(data: Map<string, unknown>): T {
+  return Object.fromEntries(data) as T
 }

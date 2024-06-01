@@ -13,8 +13,6 @@ import { memo } from "react"
  */
 export default memo(function Test(props: { count?: number }) {
 
-  console.log('子组件');
-
   return (
     <div>
       index

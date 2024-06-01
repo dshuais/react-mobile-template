@@ -29,14 +29,8 @@ export default forwardRef(function PopTest(_, ref) {
 
   const SET_POPUP = usePopupStore(state => state.SET_POPUP)
 
-
   useEffect(() => {
-    console.log('弹窗挂载');
     SET_POPUP(PopupNames.popTest, { show, setShow })
-
-    return () => {
-      console.log('弹窗卸载');
-    }
   }, [])
 
   return (

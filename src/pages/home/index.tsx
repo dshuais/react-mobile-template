@@ -41,7 +41,7 @@ function App() {
   const SET_TOKEN = useAppStore(state => state.SET_TOKEN)
   const { theme, SET_THEME } = useSettings()
 
-  console.log('父组件');
+  // console.log('父组件');
 
   const ref = useRef<PopTestRef>(null)
 
@@ -68,6 +68,9 @@ function App() {
       <div className={styles.root}>
         <Button color='primary' fill='solid' onClick={handleClick}>
           Solid
+        </Button>
+        <Button color='primary' fill='solid' onClick={()=>popShow(PopupNames.PopTestTwo)}>
+          Solid2
         </Button>
 
         <PopTest ref={ref} />

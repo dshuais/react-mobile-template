@@ -7,11 +7,11 @@
  */
 
 import { PopupNames, StoreKey } from "@/common"
-import { MakeState, createCustomStore, serializerMap } from '../store'
+import { MakeState, createCustomStore, serializerMap, deserializerMap } from '../store'
 import { createJSONStorage } from "zustand/middleware"
 
 type Store = {
-  list: Map<PopupNames, Item>
+  list: List
 }
 
 type Actions = {
@@ -20,14 +20,19 @@ type Actions = {
   CLEAR: () => void
 }
 
-
 type Item = {
   show: boolean
   setShow: (show: boolean) => void
 }
 
+type List = {
+  [key in PopupNames]: Item
+} | object
+
+type MapList = Map<PopupNames, Item>
+
 const initialState = (): Store => ({
-  list: new Map<PopupNames, Item>(),
+  list: {}
 })
 
 /**
@@ -50,19 +55,15 @@ export const usePopupStore = createCustomStore<Store, Actions>(
      */
     SET_POPUP(key: PopupNames, item: Item) {
 
-      const list = serializerMap<Map<PopupNames, Item>>(get().list)
-
-      console.log(list, get().list);
+      const list = getList(get().list)
 
       if (list.has(key)) {
         console.warn('弹窗已挂载，将清除历史状态:>> ', key);
         get().REMOVE_POPUP(key)
       }
       list.set(key, item)
-      set({ list })
 
-      console.log(list, get().list);
-
+      set({ list: setList(list) })
     },
 
     /**
@@ -70,24 +71,23 @@ export const usePopupStore = createCustomStore<Store, Actions>(
      * @param key 
      */
     REMOVE_POPUP(key: PopupNames) {
-      const list = serializerMap<Map<PopupNames, Item>>(get().list)
+      const list = getList(get().list)
 
       if (list.has(key)) {
-        console.log('key', key);
-
         list.delete(key)
       } else {
         console.warn('弹窗未挂载:>> ', key)
       }
-      set({ list })
+      set({ list: setList(list) })
     },
 
     /**
      * 清空
      */
     CLEAR() {
-      get().list.clear()
-      set({ list: new Map() })
+      const list = getList(get().list)
+      list.clear()
+      set({ list: {} })
     }
 
   }),
@@ -111,3 +111,17 @@ export const usePopupStore = createCustomStore<Store, Actions>(
     }
   }
 )
+
+/**
+ * 对list序列化为mapList
+ * @param {List} list 
+ * @returns MapList
+ */
+export const getList = (list: List) => serializerMap<MapList>(list)
+
+/**
+ * 反序列化MapList
+ * @param {MapList} list 
+ * @returns list
+ */
+export const setList = (list: MapList) => deserializerMap<List>(list)

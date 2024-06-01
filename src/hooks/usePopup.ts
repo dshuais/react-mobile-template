@@ -6,11 +6,12 @@
  * @description: 弹窗hooks
  */
 import { PopupNames } from '@/common'
-import { usePopupStore } from '@/store'
+import { getList, usePopupStore } from '@/store'
 
 export function usePopup(): PopupType {
 
-  const list = usePopupStore(state => state.list)
+  // const list = usePopupStore(state => state.list)
+  const list = getList(usePopupStore(state => state.list))
 
   /**
    * 打开的弹窗
@@ -23,6 +24,7 @@ export function usePopup(): PopupType {
    * @param other 是否关闭其他弹窗 可选，默认false不关闭
    */
   async function popShow(key: PopupNames, other: boolean = false) {
+    
     if (list.has(key)) {
       const pop = list.get(key)!
 

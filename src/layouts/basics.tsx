@@ -29,7 +29,7 @@ export default function BasicsLayout() {
     }
 
     return () => {
-      console.log('路由发生了变化:>>              ', pathname);
+      console.log('路由发生了变化:>>  ', pathname);
       popCloseAll()
       CLEAR()
     }

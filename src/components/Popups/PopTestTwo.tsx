@@ -29,20 +29,14 @@ export default forwardRef(function PopTestTwo(_, ref) {
 
   const SET_POPUP = usePopupStore(state => state.SET_POPUP)
 
-
   useEffect(() => {
-    console.log('弹窗挂载');
     SET_POPUP(PopupNames.PopTestTwo, { show, setShow })
-
-    return () => {
-      console.log('弹窗卸载');
-    }
   }, [])
 
   return (
     <CenterPopup visible={show}>
       <div className={styles.bg}>
-        我是弹窗
+        我是弹窗22222222
       </div>
       <div className={styles.close} onClick={() => setShow(false)}>close</div>
     </CenterPopup>
