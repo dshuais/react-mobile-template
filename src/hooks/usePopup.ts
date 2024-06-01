@@ -104,6 +104,7 @@ export function usePopup(): PopupType {
 
 type PopupType = {
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   openPopups: Map<PopupNames, Function>
 
   popShow: (key: PopupNames, other?: boolean) => void

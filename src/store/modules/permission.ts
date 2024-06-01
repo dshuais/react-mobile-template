@@ -21,7 +21,7 @@ export type Route = App.Route
 type AgnosticDataRouteObject = {
   id: string
   path: string
-  Component: any
+  Component: unknown
   children?: AgnosticDataRouteObject[]
   handle?: App.Handle
 }

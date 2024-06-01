@@ -28,6 +28,7 @@ export type MakeUpdater<T> = {
 
 type Store<S extends StoreApi<unknown>> = UseBoundStore<S>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Methods<T, M> = (set: SetStoreState<T>, get: () => M & T & MakeUpdater<T>, store: Store<any>) => M
 
 /**
@@ -37,7 +38,7 @@ export type Methods<T, M> = (set: SetStoreState<T>, get: () => M & T & MakeUpdat
  * @param methods actions
  * @param persistOptions 持久化配置
  */
-export function createCustomStore<T extends Object, M>(
+export function createCustomStore<T extends object, M>(
   name: StoreKey,
   state: T,
   methods: Methods<T & MakeState, M>,
@@ -88,7 +89,7 @@ export function createCustomStore<T extends Object, M>(
             }
           })
         ),
-        persistOptions as any
+        persistOptions as never
       ),
       { name, enabled: true }
     )
@@ -100,7 +101,7 @@ export function createCustomStore<T extends Object, M>(
  * @param data get().xxx拿到的数据
  * @returns 
  */
-export function serializerMap<T extends Object>(data: T): T {
+export function serializerMap<T extends object>(data: T): T {
   return new Map(Object.entries(data)) as unknown as T
 }
 
@@ -109,6 +110,6 @@ export function serializerMap<T extends Object>(data: T): T {
  * @param data serializerMap的map
  * @returns 
  */
-export function deserializerMap(data: Map<string, any>) {
+export function deserializerMap(data: Map<string, unknown>) {
   return Object.fromEntries(data)
 }

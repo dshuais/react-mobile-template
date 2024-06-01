@@ -45,7 +45,7 @@ export const useAppStore = create<Store & Actions>()(
 
         SET_TOKEN(token) {
           // set({ token })
-          set(_state => ({ token }))
+          set(() => ({ token }))
         },
 
         REMOVE_TOKEN() {

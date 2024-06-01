@@ -7,7 +7,7 @@
  */
 
 import { PopupNames, StoreKey } from "@/common"
-import { MakeState, createCustomStore, deserializerMap, serializerMap } from '../store'
+import { MakeState, createCustomStore, serializerMap } from '../store'
 import { createJSONStorage } from "zustand/middleware"
 
 type Store = {

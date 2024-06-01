@@ -12,6 +12,7 @@
     "prod": "tsc && vite build"
   },
   "dependencies": {
+    "ahooks": "^3.8.0",
     "antd-mobile": "^5.35.0",
     "axios": "^1.6.8",
     "qs": "^6.12.0",
