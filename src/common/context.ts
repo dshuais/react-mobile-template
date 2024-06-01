@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-04-09 11:59:47
  * @description: 存放所有context
  */
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export type ShowModalType = 'add' | 'edit'
 
@@ -29,3 +29,13 @@ export const DialogContext = createContext<DialogContextType>({
   showModal: () => { },
   removeDialog: () => { }
 })
+
+/**
+ * 对话context use
+ * @returns 
+ */
+export const useDialogContext = () => {
+  const ctx = useContext(DialogContext)
+
+  return ctx;
+}
