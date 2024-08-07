@@ -516,8 +516,7 @@ module.exports = {
     /**
      * ts 规则
      */
-    '@typescript-eslint/no-explicit-any': ['off'],
-    '@typescript-eslint/no-use-before-define': 'off',
-    'unused-imports/no-unused-vars': 'off'
+    // 关闭对any的警告
+    '@typescript-eslint/no-explicit-any': ['off']
   }
 };
