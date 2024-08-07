@@ -6,26 +6,26 @@
  * @LastEditTime: 2024-04-30 14:40:11
 * @description: login
 */
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { useAppStore, useSettings } from '@/store'
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAppStore, useSettings } from '@/store';
 
 function Login() {
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useSearchParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleSet() {
     setParams({
       a: 'b'
-    })
+    });
   }
 
-  const { theme, SET_THEME } = useSettings()
-  const SET_TOKEN = useAppStore(state => state.SET_TOKEN)
+  const { theme, SET_THEME } = useSettings();
+  const SET_TOKEN = useAppStore(state => state.SET_TOKEN);
 
   function handleLogin() {
-    SET_TOKEN('test-tokentokentokentokentokentokentokentokentokentokentokentokentoken')
-    navigate('/', { replace: true })
+    SET_TOKEN('test-tokentokentokentokentokentokentokentokentokentokentokentokentoken');
+    navigate('/', { replace: true });
   }
 
   return (
@@ -49,7 +49,7 @@ function Login() {
         登陆
       </button>
     </>
-  )
+  );
 }
 
-export default Login
+export default Login;

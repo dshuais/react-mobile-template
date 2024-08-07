@@ -5,18 +5,18 @@
  * @LastEditTime: 2024-04-13 23:39:17
  * @description: 权限
  */
-import { devtools } from "valtio/utils"
-import { dynamicRoutes } from "@/common"
-import { proxy } from "valtio"
-import { deepClone } from "@/utils"
-import { lazy } from "react"
-import router from '@/router'
-import { getPath, modules } from "@/router/routes"
+import { devtools } from 'valtio/utils';
+import { dynamicRoutes } from '@/common';
+import { proxy } from 'valtio';
+import { deepClone } from '@/utils';
+import { lazy } from 'react';
+import router from '@/router';
+import { getPath, modules } from '@/router/routes';
 
 /**
  * 路由表内的路由
  */
-const routes = router.routes
+const routes = router.routes;
 
 type Permission = {
   routes: Array<Route>
@@ -34,17 +34,17 @@ type AgnosticDataRouteObject = {
 
 export const permisStore: Permission = proxy({
   routes: []
-})
+});
 
-const route = routes.findIndex(item => item.path === '/')
+const route = routes.findIndex(item => item.path === '/');
 
 export const permisActions = {
   /**
    * 设置路由
-   * @param routes 
+   * @param routes
    */
   SetRoutes(routes: Array<Route>) {
-    permisStore.routes = routes
+    permisStore.routes = routes;
   },
 
   /**
@@ -52,25 +52,25 @@ export const permisActions = {
    */
   GenerateRoutes() {
     return new Promise((resolve) => {
-      this.SetRoutes(dynamicRoutes)
-      const r = filterAsyncRouter(dynamicRoutes)
-      routes[route].children = r
+      this.SetRoutes(dynamicRoutes);
+      const r = filterAsyncRouter(dynamicRoutes);
+      routes[route].children = r;
 
-      resolve('动态路由创建成功')
-    })
-  },
+      resolve('动态路由创建成功');
+    });
+  }
 
-}
+};
 
-devtools(permisStore, { name: "permission store", enabled: true })
+devtools(permisStore, { name: 'permission store', enabled: true });
 
 /**
  * 动态加载路由
- * @param routes 
- * @returns 
+ * @param routes
+ * @returns
  */
 function filterAsyncRouter(routes: Route[]) {
-  const newRoutes = deepClone<Route[]>(routes)
+  const newRoutes = deepClone<Route[]>(routes);
 
   return newRoutes.map(route => {
 
@@ -80,15 +80,15 @@ function filterAsyncRouter(routes: Route[]) {
       Component: createComponent(route.component),
       // children: route.children && route.children.length ? filterAsyncRouter(route.children) : void 0,
       handle: route.handle
+    };
+
+    if(route.children && route.children.length) {
+      r.children = filterAsyncRouter(route.children);
     }
 
-    if (route.children && route.children.length) {
-      r.children = filterAsyncRouter(route.children)
-    }
+    return r;
 
-    return r
-
-  })
+  });
 }
 
 /**
@@ -105,10 +105,10 @@ function filterAsyncRouter(routes: Route[]) {
 
 /**
  * 获取动态页面
- * @param name 
- * @returns 
+ * @param name
+ * @returns
  */
 function createComponent(name: string) {
   // return lazy(components[`${name}/index.tsx`])
-  return lazy(modules[getPath(name)])
+  return lazy(modules[getPath(name)]);
 }

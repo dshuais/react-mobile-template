@@ -5,47 +5,47 @@
  * @LastEditTime: 2024-04-30 15:54:02
  * @description: Home
  */
-import { useMemo, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import reactLogo from '../../assets/react.svg'
-import viteLogo from '/vite.svg'
-import styles from './index.module.css'
-import { useAppStore, useSettings } from '@/store'
-import { DialogContext, PopupNames } from '@/common'
-import LoadingIcon from '@/assets/icons/loading.svg?react'
-import loadingIcon from '@/assets/icons/loading.svg'
-import ViteLogo from '@/assets/react.svg?react'
-import RobotIcon from '@/assets/icons/robot.svg?react'
-import Test from '@/components/Test'
-import { Button } from 'antd-mobile'
-import PopTest, { PopTestRef } from '@/components/Popups/PopTest'
-import PopTestTwo from '@/components/Popups/PopTestTwo'
-import { usePopup } from '@/hooks'
+import { useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import reactLogo from '../../assets/react.svg';
+import viteLogo from '/vite.svg';
+import styles from './index.module.css';
+import { useAppStore, useSettings } from '@/store';
+import { DialogContext, PopupNames } from '@/common';
+import LoadingIcon from '@/assets/icons/loading.svg?react';
+import loadingIcon from '@/assets/icons/loading.svg';
+import ViteLogo from '@/assets/react.svg?react';
+import RobotIcon from '@/assets/icons/robot.svg?react';
+import Test from '@/components/Test';
+import { Button } from 'antd-mobile';
+import PopTest, { PopTestRef } from '@/components/Popups/PopTest';
+import PopTestTwo from '@/components/Popups/PopTestTwo';
+import { usePopup } from '@/hooks';
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [two, setTwo] = useState(false)
+  const [count, setCount] = useState(0);
+  const [two, setTwo] = useState(false);
 
   const countMemo = useMemo(() => {
-    return count * 5 - count
-  }, [count])
+    return count * 5 - count;
+  }, [count]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleJumpLogin() {
-    navigate('/login', { state: { b: 666 } })
+    navigate('/login', { state: { b: 666 }});
   }
 
-  const token = useAppStore(state => state.token)
-  const RESET_APP = useAppStore(state => state.RESET)
-  const SET_TOKEN = useAppStore(state => state.SET_TOKEN)
-  const { theme, SET_THEME } = useSettings()
+  const token = useAppStore(state => state.token);
+  const RESET_APP = useAppStore(state => state.RESET);
+  const SET_TOKEN = useAppStore(state => state.SET_TOKEN);
+  const { theme, SET_THEME } = useSettings();
 
   // console.log('父组件');
 
-  const ref = useRef<PopTestRef>(null)
+  const ref = useRef<PopTestRef>(null);
 
-  const { popShow } = usePopup()
+  const { popShow } = usePopup();
 
   function handleClick() {
     // Toast.show({
@@ -57,19 +57,19 @@ function App() {
     //     console.log('after')
     //   },
     // })
-    setCount(count + 1)
+    setCount(count + 1);
     // ref.current?.setShow(true)
-    popShow(PopupNames.popTest)
-    setTwo(true)
+    popShow(PopupNames.popTest);
+    setTwo(true);
   }
 
   return (
     <DialogContext.Provider value={{}}>
       <div className={styles.root}>
-        <Button color='primary' fill='solid' onClick={handleClick}>
+        <Button color="primary" fill="solid" onClick={handleClick}>
           Solid
         </Button>
-        <Button color='primary' fill='solid' onClick={()=>popShow(PopupNames.PopTestTwo)}>
+        <Button color="primary" fill="solid" onClick={() => popShow(PopupNames.PopTestTwo)}>
           Solid2
         </Button>
 
@@ -79,7 +79,7 @@ function App() {
           two ? <PopTestTwo /> : null
         }
 
-        <div className={styles.div}></div>
+        <div className={styles.div} />
         <div className={`break-all ${styles.token}`}>token: {token}</div>
         <button onClick={() => SET_TOKEN(token + '123')}>
           修改token
@@ -91,9 +91,9 @@ function App() {
         <button onClick={() => SET_THEME('dark')}>
           theme
         </button>
-        <LoadingIcon className='fill-[#1d93ab] w-16 h-16' />
+        <LoadingIcon className="fill-[#1d93ab] w-16 h-16" />
         <ViteLogo />
-        <RobotIcon className='fill-[#1d93ab] w-16 h-16' />
+        <RobotIcon className="fill-[#1d93ab] w-16 h-16" />
         <img src={loadingIcon} alt="" />
         <div className="flex justify-center items-center">
           <a href="https://vitejs.dev" target="_blank">
@@ -131,7 +131,7 @@ function App() {
         </p>
       </div>
     </DialogContext.Provider>
-  )
+  );
 }
 
-export default App
+export default App;

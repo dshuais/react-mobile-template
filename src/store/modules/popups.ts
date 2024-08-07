@@ -6,9 +6,9 @@
  * @description: popups store
  */
 
-import { PopupNames, StoreKey } from "@/common"
-import { MakeState, createCustomStore, serializerMap, deserializerMap } from '../store'
-import { createJSONStorage } from "zustand/middleware"
+import { PopupNames, StoreKey } from '@/common';
+import { MakeState, createCustomStore, serializerMap, deserializerMap } from '../store';
+import { createJSONStorage } from 'zustand/middleware';
 
 type Store = {
   list: List
@@ -33,13 +33,13 @@ type MapList = Map<PopupNames, Item>
 
 const initialState = (): Store => ({
   list: {}
-})
+});
 
 /**
  * 当前store版本
  * 更改后需要手动修改并添加migrate逻辑
  */
-const APP_STORE_VERSION: number = 0.1
+const APP_STORE_VERSION: number = 0.1;
 
 export const usePopupStore = createCustomStore<Store, Actions>(
   StoreKey.POPUP,
@@ -50,44 +50,44 @@ export const usePopupStore = createCustomStore<Store, Actions>(
 
     /**
      * 挂载popup
-     * @param key 
-     * @param item 
+     * @param key
+     * @param item
      */
     SET_POPUP(key: PopupNames, item: Item) {
 
-      const list = getList(get().list)
+      const list = getList(get().list);
 
-      if (list.has(key)) {
+      if(list.has(key)) {
         console.warn('弹窗已挂载，将清除历史状态:>> ', key);
-        get().REMOVE_POPUP(key)
+        get().REMOVE_POPUP(key);
       }
-      list.set(key, item)
+      list.set(key, item);
 
-      set({ list: setList(list) })
+      set({ list: setList(list) });
     },
 
     /**
      * 移除popup
-     * @param key 
+     * @param key
      */
     REMOVE_POPUP(key: PopupNames) {
-      const list = getList(get().list)
+      const list = getList(get().list);
 
-      if (list.has(key)) {
-        list.delete(key)
+      if(list.has(key)) {
+        list.delete(key);
       } else {
-        console.warn('弹窗未挂载:>> ', key)
+        console.warn('弹窗未挂载:>> ', key);
       }
-      set({ list: setList(list) })
+      set({ list: setList(list) });
     },
 
     /**
      * 清空
      */
     CLEAR() {
-      const list = getList(get().list)
-      list.clear()
-      set({ list: {} })
+      const list = getList(get().list);
+      list.clear();
+      set({ list: {}});
     }
 
   }),
@@ -101,27 +101,27 @@ export const usePopupStore = createCustomStore<Store, Actions>(
     migrate: (persistedState, version) => {
       type State = Store & MakeState
 
-      const state = initialState()
+      const state = initialState();
 
-      if (version != APP_STORE_VERSION) {
-        Object.assign(state, persistedState,)
+      if(version !== APP_STORE_VERSION) {
+        Object.assign(state, persistedState);
       }
 
-      return state as State
+      return state as State;
     }
   }
-)
+);
 
 /**
  * 对list序列化为mapList
- * @param {List} list 
+ * @param {List} list
  * @returns MapList
  */
-export const getList = (list: List) => serializerMap<MapList>(list)
+export const getList = (list: List) => serializerMap<MapList>(list);
 
 /**
  * 反序列化MapList
- * @param {MapList} list 
+ * @param {MapList} list
  * @returns list
  */
-export const setList = (list: MapList) => deserializerMap<List>(list)
+export const setList = (list: MapList) => deserializerMap<List>(list);

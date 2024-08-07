@@ -6,21 +6,21 @@
  * @LastEditTime: 2024-04-30 14:39:08
 * @description: login
 */
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { useSettings } from '@/store'
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSettings } from '@/store';
 
 function Home2() {
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useSearchParams();
 
-  const navtivate = useNavigate()
+  const navtivate = useNavigate();
 
   function handleSet() {
     setParams({
       a: 'b'
-    })
+    });
   }
 
-  const { theme, SET_THEME } = useSettings()
+  const { theme, SET_THEME } = useSettings();
 
   return (
     <>
@@ -40,7 +40,7 @@ function Home2() {
         返回
       </button>
     </>
-  )
+  );
 }
 
-export default Home2
+export default Home2;

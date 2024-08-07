@@ -5,21 +5,23 @@
  * @LastEditTime: 2024-04-13 23:38:44
  * @description: 路由表
  */
-import { ComponentType, lazy } from 'react'
-import { RouteObject } from 'react-router-dom'
+import { ComponentType, lazy } from 'react';
+import { RouteObject } from 'react-router-dom';
 
-const BasicsLayout = lazy(() => import('@/layouts/basics'))
+// eslint-disable-next-line react-refresh/only-export-components
+const BasicsLayout = lazy(() => import('@/layouts/basics'));
 // const Home = lazy(() => import('@/pages/home'))
 // const ErrorElement = lazy(() => import('@/pages/error'))
 
 type Module = {
+  // eslint-disable-next-line no-unused-vars
   [keys in string]: () => Promise<{ default: ComponentType<any>; }>
 }
 
 /**
  * 所有pages下页面文件
  */
-export const modules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module
+export const modules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module;
 
 const routes: RouteObject[] = [
   {
@@ -56,15 +58,15 @@ const routes: RouteObject[] = [
     // element: <ErrorElement />,
     // errorElement: <ErrorElement />
   }
-]
+];
 
-export default routes
+export default routes;
 
 /**
  * 获取页面路径
- * @param name 
- * @returns 
+ * @param name
+ * @returns
  */
 export function getPath(name: string) {
-  return `/src/pages/${name}/index.tsx`
+  return `/src/pages/${name}/index.tsx`;
 }

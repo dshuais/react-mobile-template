@@ -6,7 +6,7 @@
  * @description: 枚举文件
  */
 
-export const APP_KEY = 'react-mobile-template'
+export const APP_KEY = 'react-mobile-template';
 
 /**
  * 弹窗名称

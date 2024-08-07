@@ -5,8 +5,8 @@
  * @LastEditTime: 2024-04-07 17:37:58
  * @description: App基础store
  */
-import { proxy, subscribe } from 'valtio'
-import { devtools } from 'valtio/utils'
+import { proxy, subscribe } from 'valtio';
+import { devtools } from 'valtio/utils';
 
 type AppStore = {
   token: string
@@ -18,46 +18,44 @@ type AppStore = {
  */
 const getAppStore = (): AppStore => ({
   token: ''
-})
+});
 
 /**
  * app store
  */
-export const appStore = proxy(
-  JSON.parse(sessionStorage.getItem('app-store') as string) || getAppStore()
-)
+export const appStore = proxy(JSON.parse(sessionStorage.getItem('app-store') as string) || getAppStore());
 
 /**
  * actions
  */
 export const appActions = {
   setToken(token: string) {
-    appStore.token = token
+    appStore.token = token;
   },
   resetToken() {
-    appStore.token = ''
+    appStore.token = '';
   },
 
   /**
    * 重置整个store
    */
   reset() {
-    const app = getAppStore()
+    const app = getAppStore();
     Object.keys(app).forEach((key) => {
-      appStore[key] = app[key as keyof AppStore]
-    })
+      appStore[key] = app[key as keyof AppStore];
+    });
   }
-}
+};
 
 /**
  * 订阅AppStore变化
  * 持久化处理
  */
 subscribe(appStore, () => {
-  sessionStorage.setItem('app-store', JSON.stringify(appStore))
-})
+  sessionStorage.setItem('app-store', JSON.stringify(appStore));
+});
 
 /**
  * 配置使用devtools 插件
  */
-devtools(appStore, { name: 'app store', enabled: true })
+devtools(appStore, { name: 'app store', enabled: true });

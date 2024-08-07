@@ -6,41 +6,41 @@
  * @description: BasicsLayout
  */
 
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppStore, usePopupStore } from "@/store";
-import { useEffect } from "react";
-import Loading from "@/components/Loading";
-import { usePopup } from "@/hooks";
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAppStore, usePopupStore } from '@/store';
+import { useEffect } from 'react';
+import Loading from '@/components/Loading';
+import { usePopup } from '@/hooks';
 
 export default function BasicsLayout() {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const token = useAppStore(state => state.token)
-  const CLEAR = usePopupStore(state => state.CLEAR)
+  const token = useAppStore(state => state.token);
+  const CLEAR = usePopupStore(state => state.CLEAR);
 
-  const { popCloseAll } = usePopup()
+  const { popCloseAll } = usePopup();
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login', { replace: true })
-      return
+    if(!token) {
+      navigate('/login', { replace: true });
+      return;
     }
 
     return () => {
       console.log('路由发生了变化:>>  ', pathname);
-      popCloseAll()
-      CLEAR()
-    }
+      popCloseAll();
+      CLEAR();
+    };
 
-  }, [pathname, token])
+  }, [pathname, token]);
 
-  if (!token) {
-    return <Loading />
+  if(!token) {
+    return <Loading />;
   }
 
   return (
     <Outlet />
-  )
+  );
 }

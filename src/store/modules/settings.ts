@@ -5,23 +5,23 @@
  * @LastEditTime: 2024-04-18 17:20:05
  * @description: settings store
  */
-import { StoreKey } from '@/common'
-import { MakeState, createCustomStore } from '../store'
-import { createJSONStorage } from 'zustand/middleware'
+import { StoreKey } from '@/common';
+import { MakeState, createCustomStore } from '../store';
+import { createJSONStorage } from 'zustand/middleware';
 
 type Store = {
   theme: 'dark' | 'light'
 }
 
 const initialState = (): Store => ({
-  theme: 'light',
-})
+  theme: 'light'
+});
 
 /**
  * 当前store版本
  * 更改后需要手动修改并添加migrate逻辑
  */
-const APP_STORE_VERSION: number = 0.1
+const APP_STORE_VERSION: number = 0.1;
 
 export const useSettings = createCustomStore(
   StoreKey.SETTINGS,
@@ -31,8 +31,8 @@ export const useSettings = createCustomStore(
   (set) => ({
 
     SET_THEME(theme: Store['theme']) {
-      set({ theme })
-    },
+      set({ theme });
+    }
 
   }),
 
@@ -45,13 +45,13 @@ export const useSettings = createCustomStore(
     migrate: (persistedState, version) => {
       type State = Store & MakeState
 
-      const state = initialState()
+      const state = initialState();
 
-      if (version != APP_STORE_VERSION) {
-        Object.assign(state, persistedState,)
+      if(version !== APP_STORE_VERSION) {
+        Object.assign(state, persistedState);
       }
 
-      return state as State
+      return state as State;
     }
   }
-)
+);

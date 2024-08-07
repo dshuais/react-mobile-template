@@ -12,19 +12,19 @@
  * @param {string | number | Date} [date] 时间 可选，默认为当前时间
  * @param {string} [fmt] 格式 可选，默认为 yyyy-MM-dd HH:mm:ss
  * @returns {string}  时间date as fmt
- * 
+ *
  * formatDate('2023-03-23 15:30:59:60', 'yyyy-MM-dd HH:mm:ss:S EEE qq')
  * // => 2023-03-23 15:30:59:60 星期四 01
 */
 export const formatDate = (date?: string | number | Date, fmt?: string): string => {
-  if (date === void 0) date = new Date()
-  if (fmt === void 0) fmt = 'yyyy-MM-dd HH:mm:ss'
-  if (typeof date === 'string') {
-    date = new Date(date)
-  } else if (typeof date === 'number') {
-    date = new Date(date)
+  if(date === void 0) date = new Date();
+  if(fmt === void 0) fmt = 'yyyy-MM-dd HH:mm:ss';
+  if(typeof date === 'string') {
+    date = new Date(date);
+  } else if(typeof date === 'number') {
+    date = new Date(date);
   }
-  var o = {
+  const o = {
     'M+': date.getMonth() + 1, // 月份
     'd+': date.getDate(), // 日
     'h+': date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, // 小时
@@ -33,8 +33,8 @@ export const formatDate = (date?: string | number | Date, fmt?: string): string 
     's+': date.getSeconds(), // 秒
     'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
     'S': date.getMilliseconds() // 毫秒
-  }
-  var week = {
+  };
+  const week = {
     '0': '\u65e5',
     '1': '\u4e00',
     '2': '\u4e8c',
@@ -42,14 +42,14 @@ export const formatDate = (date?: string | number | Date, fmt?: string): string 
     '4': '\u56db',
     '5': '\u4e94',
     '6': '\u516d'
-  }
-  if (/(y+)/.test(fmt)) {
+  };
+  if(/(y+)/.test(fmt)) {
     fmt = fmt.replace(
       RegExp.$1,
       (date.getFullYear() + '').substr(4 - RegExp.$1.length)
-    )
+    );
   }
-  if (/(E+)/.test(fmt)) {
+  if(/(E+)/.test(fmt)) {
     fmt = fmt.replace(
       RegExp.$1,
       (RegExp.$1.length > 1
@@ -57,10 +57,10 @@ export const formatDate = (date?: string | number | Date, fmt?: string): string 
           ? '\u661f\u671f'
           : '\u5468'
         : '') + week[date.getDay() + '' as keyof typeof week]
-    )
+    );
   }
-  for (var k in o) {
-    if (new RegExp('(' + k + ')').test(fmt)) {
+  for(const k in o) {
+    if(new RegExp('(' + k + ')').test(fmt)) {
       type O = keyof typeof o
 
       fmt = fmt.replace(
@@ -68,11 +68,11 @@ export const formatDate = (date?: string | number | Date, fmt?: string): string 
         RegExp.$1.length === 1
           ? o[k as O] as unknown as string
           : ('00' + o[k as O]).substr(('' + o[k as O]).length)
-      )
+      );
     }
   }
-  return fmt
-}
+  return fmt;
+};
 
 /**
  * 获取日期时间戳（兼容老版本ios）
@@ -80,9 +80,9 @@ export const formatDate = (date?: string | number | Date, fmt?: string): string 
  * @returns {number} 时间戳
 */
 export const getTimestamp = (date?: string | number): number => {
-  if (typeof date == 'number' || !date) date = formatDate(date)
-  return new Date(date.replace(/-/g, '/')).getTime()
-}
+  if(typeof date === 'number' || !date) date = formatDate(date);
+  return new Date(date.replace(/-/g, '/')).getTime();
+};
 
 /**
  * 解析url参数
@@ -91,19 +91,19 @@ export const getTimestamp = (date?: string | number): number => {
  * @returns {string | object} 传了name返回值string，不传则为object
  */
 export const getUrlParam = (url?: string, name?: string): string | object => {
-  if (!url || url === '') url = window.location.search
-  url = decodeURIComponent(url)
-  url = url.substring(url.indexOf('?') + 1)
-  const obj: { [key: string]: string } = {}
-  const urlList: string[] = url.split('&')
-  if (!url || url === '') return obj
+  if(!url || url === '') url = window.location.search;
+  url = decodeURIComponent(url);
+  url = url.substring(url.indexOf('?') + 1);
+  const obj: { [key: string]: string } = {};
+  const urlList: string[] = url.split('&');
+  if(!url || url === '') return obj;
   urlList.forEach(url => {
-    const q: string[] = url.split('=')
-    obj[q[0]] = q[1]
-  })
-  if (name) return obj[name]
-  return obj
-}
+    const q: string[] = url.split('=');
+    obj[q[0]] = q[1];
+  });
+  if(name) return obj[name];
+  return obj;
+};
 
 /**
  * 获取随机字符串
@@ -111,12 +111,12 @@ export const getUrlParam = (url?: string, name?: string): string | object => {
  * @returns {string} 随机字符串
  */
 export const randomString = (e: number = 32): string => {
-  var t: string = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678',
-    a: number = t.length,
-    n: string = ''
-  for (let i = 0; i < e; i++) n += t.charAt(Math.floor(Math.random() * a))
-  return n
-}
+  const t: string = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678',
+    a: number = t.length;
+  let n: string = '';
+  for(let i = 0; i < e; i++) n += t.charAt(Math.floor(Math.random() * a));
+  return n;
+};
 
 /**
  * 生成随机且不重复的的数组
@@ -126,15 +126,15 @@ export const randomString = (e: number = 32): string => {
  * @returns {number[]} number[].length = num
 */
 export const INDEXLIST = (num: number, min: number = 10, max: number = 50): number[] => {
-  let RLIST: number[] = []
-  while (RLIST.length < num) {
-    let MRNUMBER: number = Math.floor(Math.random() * (max - min) + min)
-    if (RLIST.indexOf(MRNUMBER) == -1) {
-      RLIST.push(MRNUMBER)
+  const RLIST: number[] = [];
+  while(RLIST.length < num) {
+    const MRNUMBER: number = Math.floor(Math.random() * (max - min) + min);
+    if(RLIST.indexOf(MRNUMBER) === -1) {
+      RLIST.push(MRNUMBER);
     }
   }
-  return RLIST
-}
+  return RLIST;
+};
 
 /**
  * 生成随机数组
@@ -142,12 +142,12 @@ export const INDEXLIST = (num: number, min: number = 10, max: number = 50): numb
  * @returns {number[]} number[].length = num
 */
 export const FIVETEEN = (num: number): number[] => {
-  let tempArr: number[] = []
-  for (let i = 0; i < num; i++) {
-    tempArr.push(Math.floor(Math.random() * 99))
+  const tempArr: number[] = [];
+  for(let i = 0; i < num; i++) {
+    tempArr.push(Math.floor(Math.random() * 99));
   }
-  return tempArr
-}
+  return tempArr;
+};
 
 /**
  * 根据枚举数据val获取key
@@ -156,11 +156,11 @@ export const FIVETEEN = (num: number): number[] => {
  * @returns {keyof T} key
  */
 export const getEnumKey = <R extends string, T extends { [key: string]: R }>(enumObj: T, val: T[keyof T]): keyof T => {
-  const keys = Object.keys(enumObj)
-  if (keys.length < 0) return ''
-  const key = keys.filter(k => enumObj[k] === val)
-  return key.length > 0 ? key[0] : ''
-}
+  const keys = Object.keys(enumObj);
+  if(keys.length < 0) return '';
+  const key = keys.filter(k => enumObj[k] === val);
+  return key.length > 0 ? key[0] : '';
+};
 
 /**
  * 复制方法
@@ -170,23 +170,23 @@ export const getEnumKey = <R extends string, T extends { [key: string]: R }>(enu
  */
 export const $copy = (text: string, origin: boolean = true): Promise<boolean> => {
   return new Promise((resolve, reject) => {
-    let input: HTMLInputElement | HTMLTextAreaElement
-    if (origin) input = document.createElement('textarea')
-    else input = document.createElement('input')
+    let input: HTMLInputElement | HTMLTextAreaElement;
+    if(origin) input = document.createElement('textarea');
+    else input = document.createElement('input');
 
-    input.setAttribute('readonly', 'readonly')
-    input.value = text
-    document.body.appendChild(input)
-    input.select()
-    if (document.execCommand('copy')) {
-      document.execCommand('copy')
-      resolve(true)
+    input.setAttribute('readonly', 'readonly');
+    input.value = text;
+    document.body.appendChild(input);
+    input.select();
+    if(document.execCommand('copy')) {
+      document.execCommand('copy');
+      resolve(true);
     } else {
-      reject(false)
+      reject(false);
     }
-    document.body.removeChild(input)
-  })
-}
+    document.body.removeChild(input);
+  });
+};
 
 /**
  * 获取图片路径
@@ -195,10 +195,10 @@ export const $copy = (text: string, origin: boolean = true): Promise<boolean> =>
  * @Readmore https://vitejs.cn/guide/assets.html#new-url-url-import-meta-url
  */
 export const getImageUrl = (name: string): string => {
-  return new URL(`../assets/img/${name}`, import.meta.url).href
-}
+  return new URL(`../assets/img/${name}`, import.meta.url).href;
+};
 
-/** 
+/**
  * 页面滚动 等同于element.scrollTo() 兼容性比scrollTo()好
  * @param {number} scroll 将要滚动到的 距离顶部的距离
  * @param {string} id 滚动区域的id 默认#app
@@ -206,37 +206,37 @@ export const getImageUrl = (name: string): string => {
  * @param {number} offset 安全范围，范围内不进行滚动 可选，默认10
  */
 export const scrollPageTo = (scroll: number, id: string = 'app', duration: number = 250, offset: number = 10): void => {
-  if (!document.getElementById(id)) return
+  if(!document.getElementById(id)) return;
 
-  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
+  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   // const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame
-  const scale: number = document.body.clientWidth / 375
+  const scale: number = document.body.clientWidth / 375;
 
-  const totalScrollDistance: number = scroll * scale
-  const scrollTop: number = document.getElementById(id)!.scrollTop
-  const isDown: boolean = scrollTop <= totalScrollDistance
+  const totalScrollDistance: number = scroll * scale;
+  const scrollTop: number = document.getElementById(id)!.scrollTop;
+  const isDown: boolean = scrollTop <= totalScrollDistance;
   let scrollY: number = scrollTop,
-    oldTimestamp: number | null = null
+    oldTimestamp: number | null = null;
 
-  if ((scrollTop - totalScrollDistance <= offset && scrollTop - totalScrollDistance >= 0) ||
-    (totalScrollDistance - scrollTop <= offset && totalScrollDistance - scrollTop >= 0)) return
+  if((scrollTop - totalScrollDistance <= offset && scrollTop - totalScrollDistance >= 0) ||
+    (totalScrollDistance - scrollTop <= offset && totalScrollDistance - scrollTop >= 0)) return;
 
   function step(newTimestamp: number): void {
-    if (oldTimestamp !== null) {
-      if (scrollY <= totalScrollDistance && isDown) {
-        scrollY += (totalScrollDistance - scrollTop) / duration * (newTimestamp - oldTimestamp)
-      } else if (scrollY > totalScrollDistance && !isDown) {
-        scrollY -= (scrollTop - totalScrollDistance) / duration * (newTimestamp - oldTimestamp)
+    if(oldTimestamp !== null) {
+      if(scrollY <= totalScrollDistance && isDown) {
+        scrollY += (totalScrollDistance - scrollTop) / duration * (newTimestamp - oldTimestamp);
+      } else if(scrollY > totalScrollDistance && !isDown) {
+        scrollY -= (scrollTop - totalScrollDistance) / duration * (newTimestamp - oldTimestamp);
       }
-      document.getElementById(id)!.scrollTop = scrollY
+      document.getElementById(id)!.scrollTop = scrollY;
     }
-    if ((scrollY <= totalScrollDistance && isDown) || (scrollY >= totalScrollDistance && !isDown)) {
-      oldTimestamp = newTimestamp
-      requestAnimationFrame(step)
+    if((scrollY <= totalScrollDistance && isDown) || (scrollY >= totalScrollDistance && !isDown)) {
+      oldTimestamp = newTimestamp;
+      requestAnimationFrame(step);
     }
   }
-  requestAnimationFrame(step)
-}
+  requestAnimationFrame(step);
+};
 
 /**
  * This is just a simple version of deep copy
@@ -246,19 +246,19 @@ export const scrollPageTo = (scroll: number, id: string = 'app', duration: numbe
  * @returns {Object}
  */
 export function deepClone<T>(source: T): T {
-  if (!source && typeof source !== 'object') {
-    throw new Error('error arguments deepClone')
+  if(!source && typeof source !== 'object') {
+    throw new Error('error arguments deepClone');
   }
-  const targetObj = (source!.constructor === Array ? [] : {}) as T
+  const targetObj = (source!.constructor === Array ? [] : {}) as T;
 
   Object.keys(source!).forEach(keys => {
     type K = keyof typeof source
-    if (source![keys as K] && typeof source![keys as K] === 'object') {
-      targetObj[keys as K] = deepClone(source![keys as K])
+    if(source![keys as K] && typeof source![keys as K] === 'object') {
+      targetObj[keys as K] = deepClone(source![keys as K]);
     } else {
-      targetObj[keys as K] = source![keys as K]
+      targetObj[keys as K] = source![keys as K];
     }
-  })
+  });
 
-  return targetObj
+  return targetObj;
 }

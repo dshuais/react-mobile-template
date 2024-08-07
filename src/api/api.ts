@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-03-29 17:05:51
  * @description: api
  */
-import { get } from '@/axios'
+import { get } from '@/axios';
 
 /** 测试接口 */
-export const GetCaptcha = () => get<{ captchaImg: string }>('api/captcha')
+export const GetCaptcha = () => get<{ captchaImg: string }>('api/captcha');

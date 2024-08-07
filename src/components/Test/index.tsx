@@ -6,7 +6,7 @@
  * @description: 心平气和
  */
 
-import { memo } from "react"
+import { memo } from 'react';
 
 /**
  * mome 测试
@@ -18,5 +18,5 @@ export default memo(function Test(props: { count?: number }) {
       index
       count: {props.count}
     </div>
-  )
-})
+  );
+});

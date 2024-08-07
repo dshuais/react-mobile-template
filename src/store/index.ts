@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-04-30 14:58:40
  * @description: store
  */
-export * from './modules/app'
-export * from './modules/settings'
-export * from './modules/permission'
-export * from './modules/popups'
+export * from './modules/app';
+export * from './modules/settings';
+export * from './modules/permission';
+export * from './modules/popups';

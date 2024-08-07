@@ -5,11 +5,11 @@
  * @LastEditTime: 2024-04-30 15:00:25
  * @description: 测试弹窗组件
  */
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
-import { CenterPopup } from 'antd-mobile'
-import styles from './PopTest.module.less'
-import { usePopupStore } from '@/store'
-import { PopupNames } from '@/common'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { CenterPopup } from 'antd-mobile';
+import styles from './PopTest.module.less';
+import { usePopupStore } from '@/store';
+import { PopupNames } from '@/common';
 
 export type PopTestRef = {
   show: boolean,
@@ -18,20 +18,20 @@ export type PopTestRef = {
 
 export default forwardRef(function PopTest(_, ref) {
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   useImperativeHandle(ref, (): PopTestRef => {
     return {
       show,
       setShow
-    }
-  }, [])
+    };
+  }, []);
 
-  const SET_POPUP = usePopupStore(state => state.SET_POPUP)
+  const SET_POPUP = usePopupStore(state => state.SET_POPUP);
 
   useEffect(() => {
-    SET_POPUP(PopupNames.popTest, { show, setShow })
-  }, [])
+    SET_POPUP(PopupNames.popTest, { show, setShow });
+  }, []);
 
   return (
     <CenterPopup visible={show}>
@@ -40,5 +40,5 @@ export default forwardRef(function PopTest(_, ref) {
       </div>
       <div className={styles.close} onClick={() => setShow(false)}>close</div>
     </CenterPopup>
-  )
-})
+  );
+});

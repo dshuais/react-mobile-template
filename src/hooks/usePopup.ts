@@ -5,18 +5,18 @@
  * @LastEditTime: 2024-04-30 16:00:17
  * @description: 弹窗hooks
  */
-import { PopupNames } from '@/common'
-import { getList, usePopupStore } from '@/store'
+import { PopupNames } from '@/common';
+import { getList, usePopupStore } from '@/store';
 
 export function usePopup(): PopupType {
 
   // const list = usePopupStore(state => state.list)
-  const list = getList(usePopupStore(state => state.list))
+  const list = getList(usePopupStore(state => state.list));
 
   /**
    * 打开的弹窗
    */
-  const openPopups: PopupType["openPopups"] = new Map()
+  const openPopups: PopupType['openPopups'] = new Map();
 
   /**
    * 弹窗打开的方法
@@ -24,19 +24,19 @@ export function usePopup(): PopupType {
    * @param other 是否关闭其他弹窗 可选，默认false不关闭
    */
   async function popShow(key: PopupNames, other: boolean = false) {
-    
-    if (list.has(key)) {
-      const pop = list.get(key)!
 
-      if (pop.show) return console.warn('该弹窗已处于打开状态:>> ', key)
+    if(list.has(key)) {
+      const pop = list.get(key)!;
 
-      if (other) await popCloseAll()
+      if(pop.show) return console.warn('该弹窗已处于打开状态:>> ', key);
 
-      pop.setShow(true)
+      if(other) await popCloseAll();
 
-      if (!openPopups.has(key)) openPopups.set(key, close(key))
+      pop.setShow(true);
+
+      if(!openPopups.has(key)) openPopups.set(key, close(key));
     } else {
-      console.warn('此页面没有该弹窗:>> ', key)
+      console.warn('此页面没有该弹窗:>> ', key);
     }
   }
 
@@ -45,11 +45,11 @@ export function usePopup(): PopupType {
    * @param key 要关闭的弹窗
    */
   function popClose(key: PopupNames) {
-    if (openPopups.has(key)) {
-      openPopups.get(key)!()
-      openPopups.delete(key)
+    if(openPopups.has(key)) {
+      openPopups.get(key)!();
+      openPopups.delete(key);
     } else {
-      console.warn('该弹窗已处于关闭状态:>> ', key)
+      console.warn('该弹窗已处于关闭状态:>> ', key);
     }
   }
 
@@ -60,39 +60,39 @@ export function usePopup(): PopupType {
    */
   function close(key: PopupNames) {
     return () => {
-      if (list.has(key)) {
-        const pop = list.get(key)!
+      if(list.has(key)) {
+        const pop = list.get(key)!;
 
-        if (!pop.show) return console.warn('该弹窗已处于关闭状态:>> ', key)
+        if(!pop.show) return console.warn('该弹窗已处于关闭状态:>> ', key);
 
-        pop.setShow(false)
+        pop.setShow(false);
       } else {
-        console.warn('此页面没有该弹窗:>> ', key)
+        console.warn('此页面没有该弹窗:>> ', key);
       }
-    }
+    };
   }
 
   /**
    * 项目内关闭所有弹窗的方法
-   * @returns 
+   * @returns
    */
   function popCloseAll(): Promise<boolean> {
     return new Promise(resolve => {
-      if (openPopups.size === 0) return resolve(true)
+      if(openPopups.size === 0) return resolve(true);
 
-      openPopups.forEach(close => close())
+      openPopups.forEach(close => close());
 
-      resetOpenPopups()
+      resetOpenPopups();
 
-      resolve(true)
-    })
+      resolve(true);
+    });
   }
 
   /**
    * 重置openPopups 弹框列表
    */
   function resetOpenPopups() {
-    openPopups.clear()
+    openPopups.clear();
   }
 
   return {
@@ -100,7 +100,7 @@ export function usePopup(): PopupType {
     popShow,
     popClose,
     popCloseAll
-  }
+  };
 
 }
 

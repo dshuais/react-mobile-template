@@ -5,9 +5,9 @@
  * @LastEditTime: 2024-04-30 15:48:30
  * @description: 创建自定义store
  */
-import { StoreKey } from "@/common";
-import { StoreApi, UseBoundStore, create } from "zustand";
-import { PersistOptions, combine, devtools, persist } from "zustand/middleware";
+import { StoreKey } from '@/common';
+import { StoreApi, UseBoundStore, create } from 'zustand';
+import { PersistOptions, combine, devtools, persist } from 'zustand/middleware';
 
 type SetStoreState<T> = (
   partial: T | Partial<T> | ((state: T) => T | Partial<T>),
@@ -47,9 +47,9 @@ export function createCustomStore<T extends object, M>(
 
   const initialState: MakeState = {
     updateTime: 0
-  }
+  };
 
-  const newStore = Object.assign(initialState, state)
+  const newStore = Object.assign(initialState, state);
 
   type State = T & MakeState
 
@@ -57,59 +57,57 @@ export function createCustomStore<T extends object, M>(
 
   type Set = Partial<MakeState & T>
 
-  return create(
-    devtools(
-      persist(
-        combine(
-          newStore,
+  return create(devtools(
+    persist(
+      combine(
+        newStore,
 
-          (set, get, store) => ({
-            ...methods(set, get as Get, store),
+        (set, get, store) => ({
+          ...methods(set, get as Get, store),
 
-            /**
+          /**
              * 一个通用set的方法 可用于偷懒
-             * @param data 
+             * @param data
              */
-            SET_STATE: (data: STATE<State>) => {
-              set({ [data.key]: data.val } as Set)
-            },
+          SET_STATE: (data: STATE<State>) => {
+            set({ [data.key]: data.val } as Set);
+          },
 
-            /**
+          /**
              * 重置整个store
              */
-            RESET() {
-              set(newStore)
-            },
+          RESET() {
+            set(newStore);
+          },
 
-            /**
+          /**
              * 更新时间
              */
-            SET_UPDATE_TIME() {
-              set(() => ({ updateTime: Date.now() }) as Set)
-            }
-          })
-        ),
-        persistOptions as never
+          SET_UPDATE_TIME() {
+            set(() => ({ updateTime: Date.now() }) as Set);
+          }
+        })
       ),
-      { name, enabled: true }
-    )
-  )
+        persistOptions as never
+    ),
+    { name, enabled: true }
+  ));
 }
 
 /**
  * 序列化map  因为zustand内对map的序列化有问题，所以手动转换
  * @param data get().xxx拿到的数据
- * @returns 
+ * @returns
  */
 export function serializerMap<T>(data: object): T {
-  return new Map(Object.entries(data)) as T
+  return new Map(Object.entries(data)) as T;
 }
 
 /**
  * 反序列化map
  * @param data serializerMap的map
- * @returns 
+ * @returns
  */
 export function deserializerMap<T>(data: Map<string, unknown>): T {
-  return Object.fromEntries(data) as T
+  return Object.fromEntries(data) as T;
 }

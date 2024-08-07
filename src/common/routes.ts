@@ -28,4 +28,4 @@ export const dynamicRoutes: App.Route[] = [
       roles: ['admin', 'other']
     }
   }
-]
+];
