@@ -242,8 +242,8 @@ export const scrollPageTo = (scroll: number, id: string = 'app', duration: numbe
  * This is just a simple version of deep copy
  * Has a lot of edge cases bug
  * If you want to use a perfect deep copy, use lodash's _.cloneDeep
- * @param {Object} source
- * @returns {Object}
+ * @param {T} source
+ * @returns cloneSource
  */
 export function deepClone<T>(source: T): T {
   if(!source && typeof source !== 'object') {
