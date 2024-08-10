@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-08-10 12:56:49
  * @LastEditors: dushuai
- * @LastEditTime: 2024-08-10 15:35:03
+ * @LastEditTime: 2024-08-10 16:52:39
  * @description: 心平气和
  */
 
@@ -14,8 +14,6 @@ export default function LangOne() {
   // const lang = useSettings((state) => state.lang);
   // const SET_STATE = useSettings((state) => state.SET_STATE);
   const { lang, SET_STATE } = useSettings(useSelector(['lang', 'SET_STATE']));
-
-  console.log('LangOne render');
 
   return (
     <div>

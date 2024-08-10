@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-07 10:25:43
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 15:58:31
+ * @LastEditTime: 2024-08-10 16:53:27
  * @description: BasicsLayout
  */
 
@@ -29,7 +29,7 @@ export default function BasicsLayout() {
     }
 
     return () => {
-      console.log('路由发生了变化:>>  ', pathname);
+      // console.log('路由发生了变化:>>  ', pathname);
       popCloseAll();
       CLEAR();
     };

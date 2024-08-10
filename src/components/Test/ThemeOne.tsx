@@ -12,8 +12,6 @@ export default function ThemeOne() {
   //   SET_THEME: state.SET_THEME
   // })));
 
-  console.log('ThemeOne render');
-
   return (
     <div>
       <div>theme: {theme}</div>
