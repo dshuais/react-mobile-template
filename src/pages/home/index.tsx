@@ -2,25 +2,30 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:10:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 15:54:02
+ * @LastEditTime: 2024-08-10 13:34:49
  * @description: Home
  */
 import { useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '/vite.svg';
-import styles from './index.module.css';
-import { useAppStore, useSettings } from '@/store';
-import { DialogContext, PopupNames } from '@/common';
+import { Button } from 'antd-mobile';
+
+import PopTest, { PopTestRef } from '@/components/Popups/PopTest';
+import PopTestTwo from '@/components/Popups/PopTestTwo';
+import Test from '@/components/Test';
 import LoadingIcon from '@/assets/icons/loading.svg?react';
 import loadingIcon from '@/assets/icons/loading.svg';
 import ViteLogo from '@/assets/react.svg?react';
 import RobotIcon from '@/assets/icons/robot.svg?react';
-import Test from '@/components/Test';
-import { Button } from 'antd-mobile';
-import PopTest, { PopTestRef } from '@/components/Popups/PopTest';
-import PopTestTwo from '@/components/Popups/PopTestTwo';
+import ThemeOne from '@/components/Test/ThemeOne';
+import LangOne from '@/components/Test/LangOne';
+
+import { useAppStore, useSettings } from '@/store';
+import { DialogContext, PopupNames } from '@/common';
 import { usePopup } from '@/hooks';
+
+import reactLogo from '../../assets/react.svg';
+import viteLogo from '/vite.svg';
+import styles from './index.module.css';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -39,9 +44,9 @@ function App() {
   const token = useAppStore(state => state.token);
   const RESET_APP = useAppStore(state => state.RESET);
   const SET_TOKEN = useAppStore(state => state.SET_TOKEN);
-  const { theme, SET_THEME } = useSettings();
-
-  // console.log('父组件');
+  // const { theme, SET_THEME } = useSettings();
+  // const theme = useSettings(state => state.theme);
+  const SET_THEME = useSettings(state => state.SET_THEME);
 
   const ref = useRef<PopTestRef>(null);
 
@@ -65,6 +70,9 @@ function App() {
 
   return (
     <DialogContext.Provider value={{}}>
+      <ThemeOne />
+      <LangOne />
+      <hr />
       <div className={styles.root}>
         <Button color="primary" fill="solid" onClick={handleClick}>
           Solid
@@ -87,9 +95,12 @@ function App() {
         <button onClick={RESET_APP}>
           重置
         </button>
-        <div>theme: {theme}</div>
-        <button onClick={() => SET_THEME('dark')}>
-          theme
+        {/* <div>theme: {theme}</div> */}
+        <button onClick={() => SET_THEME('dark')} className="p-4 bg-pink-400">
+        dark
+        </button>
+        <button onClick={() => SET_THEME('light')} className="p-4 bg-violet-500 ml-4">
+        light
         </button>
         <LoadingIcon className="fill-[#1d93ab] w-16 h-16" />
         <ViteLogo />

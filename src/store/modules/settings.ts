@@ -2,19 +2,27 @@
  * @Author: dushuai
  * @Date: 2024-04-18 15:09:58
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-18 17:20:05
+ * @LastEditTime: 2024-08-10 13:24:16
  * @description: settings store
  */
 import { StoreKey } from '@/common';
 import { MakeState, createCustomStore } from '../store';
 import { createJSONStorage } from 'zustand/middleware';
 
-type Store = {
-  theme: 'dark' | 'light'
+export type Theme = 'dark' | 'light';
+
+export type Lang = 'zh' | 'en';
+
+type DefaultStore = {
+  theme: Theme
+  lang: Lang
 }
 
-const initialState = (): Store => ({
-  theme: 'light'
+type Store = DefaultStore & MakeState;
+
+const initialState = (): DefaultStore => ({
+  theme: 'light',
+  lang: 'zh'
 });
 
 /**
@@ -43,7 +51,6 @@ export const useSettings = createCustomStore(
 
     // migration logic
     migrate: (persistedState, version) => {
-      type State = Store & MakeState
 
       const state = initialState();
 
@@ -51,7 +58,7 @@ export const useSettings = createCustomStore(
         Object.assign(state, persistedState);
       }
 
-      return state as State;
+      return state as Store;
     }
   }
 );

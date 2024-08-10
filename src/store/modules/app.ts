@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-17 14:49:31
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-28 15:26:21
+ * @LastEditTime: 2024-08-10 11:11:41
  * @description: app store
  */
 import { StoreKey } from '@/common';
@@ -73,6 +73,12 @@ export const useAppStore = create<Store & Actions>()(devtools(
 
         return state;
       }
+
+      // Filter the persisted value. By default, everything is persisted.
+      // partialize: state => ({
+      //   openId: state.openId,
+      //   token: state.token
+      // })
     }
   ),
   { name: StoreKey.APP, enabled: true }

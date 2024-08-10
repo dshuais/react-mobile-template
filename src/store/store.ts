@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-18 12:28:06
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-30 15:48:30
+ * @LastEditTime: 2024-08-10 13:28:02
  * @description: 创建自定义store
  */
 import { StoreKey } from '@/common';
@@ -17,7 +17,7 @@ type SetStoreState<T> = (
 export type STATE<T> = { key: keyof T, val: T[keyof T] }
 
 export type MakeState = {
-  updateTime: number,
+  updateTime: number
 }
 
 export type MakeUpdater<T> = {
@@ -28,7 +28,6 @@ export type MakeUpdater<T> = {
 
 type Store<S extends StoreApi<unknown>> = UseBoundStore<S>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Methods<T, M> = (set: SetStoreState<T>, get: () => M & T & MakeUpdater<T>, store: Store<any>) => M
 
 /**
@@ -57,6 +56,11 @@ export function createCustomStore<T extends object, M>(
 
   type Set = Partial<MakeState & T>
 
+  type Update =
+  | State
+  | Partial<State>
+  | ((state: State) => State | Partial<State>);
+
   return create(devtools(
     persist(
       combine(
@@ -69,8 +73,8 @@ export function createCustomStore<T extends object, M>(
              * 一个通用set的方法 可用于偷懒
              * @param data
              */
-          SET_STATE: (data: STATE<State>) => {
-            set({ [data.key]: data.val } as Set);
+          SET_STATE: (data: Update) => {
+            set(data);
           },
 
           /**

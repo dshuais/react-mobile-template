@@ -15,6 +15,7 @@
     "ahooks": "^3.8.0",
     "antd-mobile": "^5.35.0",
     "axios": "^1.6.8",
+    "lodash-es": "^4.17.21",
     "qs": "^6.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,6 +23,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.11.30",
     "@types/postcss-pxtorem": "^6.0.3",
     "@types/qs": "^6.9.14",
