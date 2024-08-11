@@ -55,3 +55,7 @@ pnpm prod
 - [Tailwindcss](https://www.tailwindcss.cn/)
 - [Zustand](https://zustand-demo.pmnd.rs/)
 - [Ant Design Mobile](https://mobile.ant.design/zh)
+
+## 版本记录
+
+> 已移除 Valtio 状态管理仓库备选，react 框架还是遵循不可变原则较好。
