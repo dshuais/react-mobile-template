@@ -11,6 +11,8 @@ import { cancelRequest } from './requestCancel';
 import ErrorCodeHandle from './requestCode';
 import { useAppStore } from '@/store';
 
+type R<T> = Res.ResponseRes<T>;
+
 /** 不需要处理异常白名单 */
 const whiteList: string[] = ['/qiniu/upload/uptoken'];
 
@@ -42,7 +44,7 @@ service.interceptors.request.use(
 
 // 响应拦截
 service.interceptors.response.use(
-  (response: AxiosResponse<Res.ResponseRes<unknown>, unknown>) => {
+  (response: AxiosResponse<R<unknown>, unknown>) => {
     const url = response.config.url as string;
 
     cancelRequest.removePending(response.config); // 删除重复请求
@@ -87,16 +89,16 @@ service.interceptors.response.use(
  * 基础的请求
 */
 /** POST表单格式 */
-export function post<T = unknown>(url: string, params?: object): Promise<Res.ResponseRes<T>> {
-  return new Promise<Res.ResponseRes<T>>((resolve, reject) => {
+export function post<T = unknown>(url: string, params?: unknown) {
+  return new Promise<R<T>>((resolve, reject) => {
     service
-      .post(url, qs.stringify(params), {
+      .post<R<T>>(url, qs.stringify(params), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
       })
       .then(
-        (response: AxiosResponse<Res.ResponseRes<T>>) => {
+        (response) => {
           response && resolve(response.data);
         },
         (err: AxiosError) => {
@@ -110,12 +112,12 @@ export function post<T = unknown>(url: string, params?: object): Promise<Res.Res
 }
 
 /** POST JSON格式 */
-export function postJSON<T = unknown>(url: string, params?: object): Promise<Res.ResponseRes<T>> {
-  return new Promise<Res.ResponseRes<T>>((resolve, reject) => {
+export function postJSON<T = unknown>(url: string, params?: unknown) {
+  return new Promise<R<T>>((resolve, reject) => {
     service
       .post(url, params)
       .then(
-        (response: AxiosResponse<Res.ResponseRes<T>>) => {
+        (response: AxiosResponse<R<T>>) => {
           response && resolve(response.data);
         },
         (err: AxiosError) => {
@@ -129,12 +131,12 @@ export function postJSON<T = unknown>(url: string, params?: object): Promise<Res
 }
 
 /** GET请求 */
-export function get<T = unknown>(url: string, params?: object): Promise<Res.ResponseRes<T>> {
-  return new Promise<Res.ResponseRes<T>>((resolve, reject) => {
+export function get<T = unknown>(url: string, params?: unknown) {
+  return new Promise<R<T>>((resolve, reject) => {
     service
       .get(url, { params })
       .then(
-        (response: AxiosResponse<Res.ResponseRes<T>>) => {
+        (response: AxiosResponse<R<T>>) => {
           response && resolve(response.data);
         },
         (err: AxiosError) => {
@@ -150,12 +152,12 @@ export function get<T = unknown>(url: string, params?: object): Promise<Res.Resp
 /**
  * PUT请求
  */
-export function put<T = unknown>(url: string, params?: object): Promise<Res.ResponseRes<T>> {
-  return new Promise<Res.ResponseRes<T>>((resolve, reject) => {
+export function put<T = unknown>(url: string, params?: unknown) {
+  return new Promise<R<T>>((resolve, reject) => {
     service
       .put(url, params)
       .then(
-        (response: AxiosResponse<Res.ResponseRes<T>>) => {
+        (response: AxiosResponse<R<T>>) => {
           response && resolve(response.data);
         },
         (err: AxiosError) => {
@@ -171,12 +173,12 @@ export function put<T = unknown>(url: string, params?: object): Promise<Res.Resp
 /**
  * DELETE请求
  */
-export function del<T = unknown>(url: string, params?: object): Promise<Res.ResponseRes<T>> {
-  return new Promise<Res.ResponseRes<T>>((resolve, reject) => {
+export function del<T = unknown>(url: string, params?: unknown) {
+  return new Promise<R<T>>((resolve, reject) => {
     service
       .delete(url, { params })
       .then(
-        (response: AxiosResponse<Res.ResponseRes<T>>) => {
+        (response: AxiosResponse<R<T>>) => {
           response && resolve(response.data);
         },
         (err: AxiosError) => {
