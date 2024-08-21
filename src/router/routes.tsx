@@ -8,55 +8,48 @@
 import { ComponentType, lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
+import { LoginAction, LoginLoader, LogoutAction, RootLoader } from '@/permission';
+
 // eslint-disable-next-line react-refresh/only-export-components
 const BasicsLayout = lazy(() => import('@/layouts/basics'));
-// const Home = lazy(() => import('@/pages/home'))
-// const ErrorElement = lazy(() => import('@/pages/error'))
 
 type Module = {
-  // eslint-disable-next-line no-unused-vars
   [keys in string]: () => Promise<{ default: ComponentType<any>; }>
 }
 
-/**
- * 所有pages下页面文件
- */
-export const modules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module;
+/** 所有pages下页面文件 */
+const pagesModules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module;
+/** 所有pages\*\router下嵌套页面文件 */
+const nestModules = import.meta.glob('@/pages/*/router/*/index.tsx') as unknown as Module;
+/** 所有页面文件 */
+export const modules: Module = {
+  ...pagesModules,
+  ...nestModules
+};
 
 const routes: RouteObject[] = [
   {
+    id: 'root',
     path: '/',
+    loader: RootLoader,
     Component: BasicsLayout,
     children: []
-    // element: <Home />,
-    // errorElement: <ErrorElement />,
-    // 使用嵌套路由需要在 父页面元素内加上 <Outlet /> 组件
-    // children: [
-    //   {
-    //     id: 'Home',
-    //     path: '/',
-    //     // element: <Home />
-    //     Component: lazy(modules['/src/pages/home/index.tsx'])
-    //   }
-    // ],
-    // handle: {
-    //   title: 'Home'
-    // }
   },
   {
     path: '/login',
-    // async lazy() {
-    //   let { default: Login } = await import('@/pages/login')
-    //   return { Component: Login }
-    // }
-    // Component: lazy(() => import('@/pages/login'))
+    loader: LoginLoader,
+    action: LoginAction,
     Component: lazy(modules[getPath('login')])
+  },
+  {
+    // logout路由只用来退出登录，不展示页面
+    path: '/logout',
+    action: LogoutAction,
+    Component: lazy(modules[getPath('error')])
   },
   {
     path: '*',
     Component: lazy(modules[getPath('error')])
-    // element: <ErrorElement />,
-    // errorElement: <ErrorElement />
   }
 ];
 

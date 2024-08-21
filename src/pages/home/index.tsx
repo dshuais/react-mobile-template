@@ -6,7 +6,7 @@
  * @description: Home
  */
 import { useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useFetcher } from 'react-router-dom';
 import { Button } from 'antd-mobile';
 
 import PopTest, { PopTestRef } from '@/components/Popups/PopTest';
@@ -36,16 +36,14 @@ function App() {
   }, [count]);
 
   const navigate = useNavigate();
+  const fetcher = useFetcher();
 
   function handleJumpLogin() {
     navigate('/login', { state: { b: 666 }});
   }
 
   const token = useAppStore(state => state.token);
-  const RESET_APP = useAppStore(state => state.RESET);
   const SET_TOKEN = useAppStore(state => state.SET_TOKEN);
-  // const { theme, SET_THEME } = useSettings();
-  // const theme = useSettings(state => state.theme);
   const SET_THEME = useSettings(state => state.SET_THEME);
 
   const ref = useRef<PopTestRef>(null);
@@ -53,19 +51,13 @@ function App() {
   const { popShow } = usePopup();
 
   function handleClick() {
-    // Toast.show({
-    //   icon: 'loading',
-    //   content: 'Loading...',
-    //   maskClickable: false,
-    //   duration: 3000,
-    //   afterClose: () => {
-    //     console.log('after')
-    //   },
-    // })
     setCount(count + 1);
-    // ref.current?.setShow(true)
     popShow(PopupNames.popTest);
     setTwo(true);
+  }
+
+  function handleLogout() {
+    fetcher.submit(null, { action: '/logout', method: 'post' });
   }
 
   return (
@@ -92,7 +84,7 @@ function App() {
         <button onClick={() => SET_TOKEN(token + '123')}>
           修改token
         </button>
-        <button onClick={RESET_APP}>
+        <button onClick={handleLogout}>
           重置
         </button>
         {/* <div>theme: {theme}</div> */}

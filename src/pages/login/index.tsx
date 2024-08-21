@@ -6,13 +6,16 @@
  * @LastEditTime: 2024-04-30 14:40:11
 * @description: login
 */
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAppStore, useSettings } from '@/store';
+import { useNavigate, useSearchParams, useSubmit } from 'react-router-dom';
+
+import { useSettings } from '@/store';
 
 function Login() {
   const [params, setParams] = useSearchParams();
 
   const navigate = useNavigate();
+
+  const sumbit = useSubmit();
 
   function handleSet() {
     setParams({
@@ -21,11 +24,10 @@ function Login() {
   }
 
   const { theme, SET_THEME } = useSettings();
-  const SET_TOKEN = useAppStore(state => state.SET_TOKEN);
 
   function handleLogin() {
-    SET_TOKEN('test-tokentokentokentokentokentokentokentokentokentokentokentokentoken');
-    navigate('/', { replace: true });
+    const token = 'test-tokentokentokentokentokentokentokentokentokentokentokentokentoken';
+    sumbit({ token, redirectTo: params.get('from') || '/' }, { method: 'post', replace: true });
   }
 
   return (
